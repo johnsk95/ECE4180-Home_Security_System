@@ -16,10 +16,11 @@ trigger = True
 alarm = False
 
 timestamp = time.strftime('%b-%d-%Y_%H:%M', time.localtime())
+camera = PiCamera()
 
 def stream_camera():
 	camera.start_preview()
-	camera.start_recording(f'/recordings/{timestamp}.h264')
+	camera.start_recording(f'/home/pi/recordings/{timestamp}.h264')
 	sleep(10)
 	camera.stop_recording()
 	camera.stop_preview
@@ -29,11 +30,15 @@ def play_sound():
 
 def activate_alarm():
 	print('alarm activated!')
+	camera.start_preview()
+	camera.start_recording(f'/home/pi/recordings/{timestamp}.h264')
 	for _ in range(10):
-		led.value = True
-		time.sleep(0.5)
-		led.value = False
-		time.sleep(0.5)
+	    led.value = True
+	    time.sleep(0.5)
+	    led.value = False
+	    time.sleep(0.5)
+	camera.stop_recording()
+	camera.stop_preview
 		
 
 while trigger:
