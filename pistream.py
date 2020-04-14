@@ -39,6 +39,10 @@ class StreamingOutput(object):
                 self.frame = self.buffer.getvalue()
                 self.condition.notify_all()
             self.buffer.seek(0)
+        # Write the rest of the stream to disk
+        with io.open('test_output.h264', 'wb') as output:
+            output.write(self.buffer.read())
+            
         return self.buffer.write(buf)
 
 class StreamingHandler(server.BaseHTTPRequestHandler):
@@ -68,17 +72,20 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
                         with output.condition:
                             output.condition.wait()
                             frame = output.frame
-                        image = cv2.imdecode(frame, cv2.IMREAD_COLOR)
-                        image = cv2.resize(image, (640,480))
-                        out.write(image)
+                            #image = cv2.imdecode(frame, cv2.IMREAD_COLOR)
+                            #image = cv2.resize(image, (640,480))
+                            #out.write(image)
                     else:
                         if(cap.isOpened()):
                             ret, image = cap.read()
                             image = cv2.resize(image, (640,480))
                             _, frame = cv2.imencode('.JPEG', image)
                             if ret==True:
-                                # write the frame
+                                image = cv2.imdecode(frame, cv2.IMREAD_COLOR)
+                                image = cv2.resize(image, (640,480))
                                 out.write(image)
+                                # write the frame
+                                #out.write(image)
                         else:
                             can_stream = False
                             print("cannot stream")
@@ -122,7 +129,7 @@ except:
     print("Camera not attached")
     camera_works = False
     #stream static video file instead
-    cap = cv2.VideoCapture('dolce_vid.avi')
+    cap = cv2.VideoCapture('dolce_faster.mp4')
     
     try:
         address = ('', 8000)
