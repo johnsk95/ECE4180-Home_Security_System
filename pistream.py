@@ -10,6 +10,7 @@ import time
 import board
 import busio
 import digitalio
+import numpy as np
 
 PAGE="""\
 <html>
@@ -40,8 +41,8 @@ class StreamingOutput(object):
                 self.condition.notify_all()
             self.buffer.seek(0)
         # Write the rest of the stream to disk
-        with io.open('test_output.h264', 'wb') as output:
-            output.write(self.buffer.read())
+        #with io.open('test_output.h264', 'wb') as output:
+            #output.write(self.buffer.read())
             
         return self.buffer.write(buf)
 
@@ -72,6 +73,7 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
                         with output.condition:
                             output.condition.wait()
                             frame = output.frame
+                            #arr = np.fromstring(frame, np.uint8)
                             #image = cv2.imdecode(frame, cv2.IMREAD_COLOR)
                             #image = cv2.resize(image, (640,480))
                             #out.write(image)
