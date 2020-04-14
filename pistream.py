@@ -10,7 +10,6 @@ import time
 import board
 import busio
 import digitalio
-import home_security
 
 PAGE="""\
 <html>
@@ -24,6 +23,7 @@ PAGE="""\
 </html>
 """
 camera_works = True
+cap = None
 
 class StreamingOutput(object):
     def __init__(self):
@@ -64,15 +64,26 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
             self.end_headers()
             try:
                 while True:
-                    with output.condition:
-                        output.condition.wait()
-                        frame = output.frame
-                    self.wfile.write(b'--FRAME\r\n')
-                    self.send_header('Content-Type', 'image/jpeg')
-                    self.send_header('Content-Length', len(frame))
-                    self.end_headers()
-                    self.wfile.write(frame)
-                    self.wfile.write(b'\r\n')
+                    can_stream = True
+                    if(camera_works):
+                        with output.condition:
+                            output.condition.wait()
+                            frame = output.frame
+                    else:
+                        if(cap.isOpened()):
+                            ret, image = cap.read()
+                            _, frame = cv2.imencode('.JPEG', image)
+                        else:
+                            can_stream = False
+                            print("cannot stream")
+                    
+                    if(can_stream):
+                        self.wfile.write(b'--FRAME\r\n')
+                        self.send_header('Content-Type', 'image/jpeg')
+                        self.send_header('Content-Length', len(frame))
+                        self.end_headers()
+                        self.wfile.write(frame)
+                        self.wfile.write(b'\r\n')
             except Exception as e:
                 logging.warning(
                     'Removed streaming client %s: %s',
@@ -85,6 +96,7 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
     allow_reuse_address = True
     daemon_threads = True
 try:
+    print("start camera")
     with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
         output = StreamingOutput()
         camera.start_recording(output, format='mjpeg')
@@ -98,16 +110,14 @@ except:
     print("Camera not attached")
     camera_works = False
     #stream static video file instead
-    cap = cv2.VideoCapture('vtest.avi')
+    cap = cv2.VideoCapture('dolce_vid.avi')
     
-    while(cap.isOpened()):
-        ret, frame = cap.read()
-
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-        cv2.imshow('frame',gray)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-    cap.release()
-    cv2.destroyAllWindows()
+    
+    try:
+        address = ('', 8000)
+        server = StreamingServer(address, StreamingHandler)
+        server.serve_forever()
+    finally:
+        cap.release()
+        cv2.destroyAllWindows()
+   
