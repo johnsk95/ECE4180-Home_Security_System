@@ -122,7 +122,7 @@ except:
     print("Camera not attached")
     camera_works = False
     #stream static video file instead
-    cap = cv2.VideoCapture('dolce_vid.avi')
+    cap = cv2.VideoCapture('dolce_faster.mp4')
     
     try:
         address = ('', 8000)
