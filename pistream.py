@@ -4,6 +4,12 @@ import logging
 import socketserver
 from threading import Condition
 from http import server
+import adafruit_vl53l0x
+import time
+import board
+import busio
+import digitalio
+import home_security
 
 PAGE="""\
 <html>
@@ -86,3 +92,4 @@ with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
         server.serve_forever()
     finally:
         camera.stop_recording()
+
