@@ -73,10 +73,10 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
                         with output.condition:
                             output.condition.wait()
                             frame = output.frame
-                            #arr = np.fromstring(frame, np.uint8)
-                            #image = cv2.imdecode(frame, cv2.IMREAD_COLOR)
-                            #image = cv2.resize(image, (640,480))
-                            #out.write(image)
+                            arr = np.frombuffer(frame, np.uint8)
+                            image = cv2.imdecode(arr, cv2.IMREAD_COLOR)
+                            image = cv2.resize(image, (640,480))
+                            out.write(image)
                     else:
                         if(cap.isOpened()):
                             ret, image = cap.read()
