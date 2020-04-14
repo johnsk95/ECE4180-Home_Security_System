@@ -22,8 +22,7 @@ PAGE="""\
 </body>
 </html>
 """
-camera_works = True
-cap = None
+
 
 class StreamingOutput(object):
     def __init__(self):
@@ -69,6 +68,9 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
                         with output.condition:
                             output.condition.wait()
                             frame = output.frame
+                        image = cv2.imdecode(frame, cv2.IMREAD_COLOR)
+                        image = cv2.resize(image, (640,480))
+                        out.write(image)
                     else:
                         if(cap.isOpened()):
                             ret, image = cap.read()
@@ -99,6 +101,11 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
 class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
     allow_reuse_address = True
     daemon_threads = True
+    
+    
+camera_works = True
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480))
 try:
     print("start camera")
     with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
@@ -116,8 +123,6 @@ except:
     camera_works = False
     #stream static video file instead
     cap = cv2.VideoCapture('dolce_vid.avi')
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480))
     
     try:
         address = ('', 8000)
