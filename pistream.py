@@ -72,10 +72,11 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
                     else:
                         if(cap.isOpened()):
                             ret, image = cap.read()
+                            image = cv2.resize(image, (640,480))
                             _, frame = cv2.imencode('.JPEG', image)
                             if ret==True:
                                 # write the frame
-                                out.write(frame)
+                                out.write(image)
                         else:
                             can_stream = False
                             print("cannot stream")
@@ -108,7 +109,8 @@ try:
             server = StreamingServer(address, StreamingHandler)
             server.serve_forever()
         finally:
-            camera.stop_recording()
+            if(camera_works):
+                camera.stop_recording()
 except:
     print("Camera not attached")
     camera_works = False
@@ -124,4 +126,5 @@ except:
     finally:
         cap.release()
         cv2.destroyAllWindows()
+        out.release()
    
