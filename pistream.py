@@ -73,6 +73,9 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
                         if(cap.isOpened()):
                             ret, image = cap.read()
                             _, frame = cv2.imencode('.JPEG', image)
+                            if ret==True:
+                                # write the frame
+                                out.write(frame)
                         else:
                             can_stream = False
                             print("cannot stream")
@@ -111,7 +114,8 @@ except:
     camera_works = False
     #stream static video file instead
     cap = cv2.VideoCapture('dolce_vid.avi')
-    
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480))
     
     try:
         address = ('', 8000)
