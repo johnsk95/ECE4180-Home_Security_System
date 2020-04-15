@@ -113,7 +113,7 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
 
     def do_POST(self):
         self.send_response(200)
-        print("post");
+        print("post")
 
 class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
     allow_reuse_address = True
