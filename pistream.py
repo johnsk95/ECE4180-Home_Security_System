@@ -20,6 +20,7 @@ PAGE="""\
 <body>
 <h1>PiCamera MJPEG Streaming Demo</h1>
 <img src="stream.mjpg" width="640" height="480" />
+<button type="button">Click Me!</button>
 </body>
 </html>
 """
@@ -48,6 +49,7 @@ class StreamingOutput(object):
 
 class StreamingHandler(server.BaseHTTPRequestHandler):
     def do_GET(self):
+        print(self.path)
         if self.path == '/':
             self.send_response(301)
             self.send_header('Location', '/index.html')
@@ -106,6 +108,7 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
         else:
             self.send_error(404)
             self.end_headers()
+    
 
 class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
     allow_reuse_address = True
