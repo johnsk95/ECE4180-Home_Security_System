@@ -1,6 +1,6 @@
 from flask import Flask, render_template, Response
 # Raspberry Pi camera module (requires picamera package, developed by Miguel Grinberg)
-from camera_pi import Camera
+from camera import Camera
 import cv2
 
 app = Flask(__name__)
@@ -12,14 +12,18 @@ def gen(camera):
     """Video streaming generator function."""
     while True:
         frame = None
+        frame_ready = False
         if(camera_works):
             frame = camera.get_frame()
+            frame_ready = True
         else:
             if(cap.isOpened()):
                 ret, image = cap.read()
                 image = cv2.resize(image, (640,480))
                 _, frame = cv2.imencode('.JPEG', image)
-        if(frame != None):       
+                frame = frame.tostring()
+                frame_ready = True
+        if(frame_ready):       
             yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 @app.route('/video_feed')
