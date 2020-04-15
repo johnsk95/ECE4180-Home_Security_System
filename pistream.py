@@ -20,7 +20,7 @@ PAGE="""\
 <body>
 <h1>PiCamera MJPEG Streaming Demo</h1>
 <img src="stream.mjpg" width="640" height="480" />
-<form action="<?php echo 'test' ?>" method="post">
+<form action="/test" method="post">
   <button type="submit">Submit</button>
 </form>
 </body>
@@ -114,6 +114,7 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
     def do_POST(self):
         self.send_response(200)
         print("post");
+        self.end_headers()
 
 class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
     allow_reuse_address = True
