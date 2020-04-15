@@ -19,10 +19,19 @@ PAGE="""\
 </head>
 <body>
 <h1>PiCamera MJPEG Streaming Demo</h1>
-<form action="/test" method="post">
-  <button type="submit">Submit</button>
-</form>
+    <button type="submit" onclick="addMsg()">Submit</button>
 </body>
+<script>
+function addMsg() {
+    var message = $('input[name=message]').val();
+    $.ajax({
+        type: "POST",
+        url: "/chat",
+        data: {'message': message},
+        cache: false
+    });
+}
+</script>
 </html>
 """
 
