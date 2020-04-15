@@ -20,22 +20,24 @@ PAGE="""\
 <body>
 <h1>PiCamera MJPEG Streaming Demo</h1>
     <form>
-        <input type="submit" name="submit" value="Show Camera" />
-        <div id="server-results"><!-- For server results --></div>
+        <input type="submit" id=camera value="Show Camera" />
     </form>
 </body>
 <script>
-    $("form").submit(function(event){
-        event.preventDefault(); //prevent default action 
-        var post_url = ""; //get form action url
-        var request_method = $(this).attr("method"); //get form GET/POST method
-        var form_data = $(this).serialize(); //Encode form elements for submission
-        
-        $.ajax({
-            url : post_url,
-            type: request_method,
-            data : form_data
-        })
+    $(document).ready(function() {
+        $("#camera").click(function(e) {
+            e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: ' ',
+                    data: $('form').serialize()
+                    success: function() {
+                    console.log("Signup was successful");
+                }
+                error: function() {
+                console.log("Signup was unsuccessful");
+            }
+        });
     });
 </script>
 </html>
