@@ -20,7 +20,7 @@ PAGE="""\
 <body>
 <h1>PiCamera MJPEG Streaming Demo</h1>
 <img src="stream.mjpg" width="640" height="480" />
-<form action="/submit-cat-photo">
+<form action="<?php echo 'test' ?>" method="post">
   <button type="submit">Submit</button>
 </form>
 </body>
@@ -112,13 +112,8 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
             self.end_headers()
 
     def do_POST(self):
-        content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
-        post_data = self.rfile.read(content_length) # <--- Gets the data itself
-        logging.info("POST request,\nPath: %s\nHeaders:\n%s\n\nBody:\n%s\n",
-                str(self.path), str(self.headers), post_data.decode('utf-8'))
-
-        self._set_response()
-        self.wfile.write("POST request for {}".format(self.path).encode('utf-8'))
+        self.send_response(200)
+        print("post");
 
 class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
     allow_reuse_address = True
