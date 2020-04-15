@@ -19,14 +19,8 @@ PAGE="""\
 </head>
 <body>
 <h1>PiCamera MJPEG Streaming Demo</h1>
-    <form action="path/to/server/script" method="post" id="my_form">
-        <label>Name</label>
-        <input type="text" name="name" />
-        <label>Email</label>
-        <input type="email" name="email" />
-        <label>Website</label>
-        <input type="url" name="website" />
-        <input type="submit" name="submit" value="Submit Form" />
+    <form action="/start-stream" method="post" id="my_form">
+        <input type="submit" name="submit" value="Show Camera" />
         <div id="server-results"><!-- For server results --></div>
     </form>
 </body>
@@ -136,10 +130,7 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
     def do_POST(self):
         content = PAGE.encode('utf-8')
         self.send_response(200)
-        self.send_header('Content-Type', 'text/html')
-        self.send_header('Content-Length', len(content))
         self.end_headers()
-        self.wfile.write(content)
         print(self.path)
 
 class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
