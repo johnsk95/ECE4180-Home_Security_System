@@ -19,7 +19,9 @@ PAGE="""\
 </head>
 <body>
 <h1>PiCamera MJPEG Streaming Demo</h1>
-    <form>
+<center><img src="stream.mjpg" width="640" height="480"></center>
+    <form action="/test" method="post" id="my_form">
+
         <input type="submit" id=camera value="Show Camera" />
     </form>
 </body>
@@ -41,9 +43,6 @@ PAGE="""\
     });
 </script>
 </html>
-"""
-SHOW_CAMERA="""\
-
 """
 
 
@@ -82,50 +81,50 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
             self.send_header('Content-Length', len(content))
             self.end_headers()
             self.wfile.write(content)
-        # elif self.path == '/stream.mjpg':
-        #     self.send_response(200)
-        #     self.send_header('Age', 0)
-        #     self.send_header('Cache-Control', 'no-cache, private')
-        #     self.send_header('Pragma', 'no-cache')
-        #     self.send_header('Content-Type', 'multipart/x-mixed-replace; boundary=FRAME')
-        #     self.end_headers()
-        #     try:
-        #         while True:
-        #             can_stream = True
-        #             if(camera_works):
-        #                 with output.condition:
-        #                     output.condition.wait()
-        #                     frame = output.frame
-        #                     arr = np.frombuffer(frame, np.uint8)
-        #                     image = cv2.imdecode(arr, cv2.IMREAD_COLOR)
-        #                     image = cv2.resize(image, (640,480))
-        #                     out.write(image)
-        #             else:
-        #                 if(cap.isOpened()):
-        #                     ret, image = cap.read()
-        #                     image = cv2.resize(image, (640,480))
-        #                     _, frame = cv2.imencode('.JPEG', image)
-        #                     if ret==True:
-        #                         image = cv2.imdecode(frame, cv2.IMREAD_COLOR)
-        #                         image = cv2.resize(image, (640,480))
-        #                         out.write(image)
-        #                         # write the frame
-        #                         #out.write(image)
-        #                 else:
-        #                     can_stream = False
-        #                     print("cannot stream")
+        elif self.path == '/stream.mjpg':
+            self.send_response(200)
+            self.send_header('Age', 0)
+            self.send_header('Cache-Control', 'no-cache, private')
+            self.send_header('Pragma', 'no-cache')
+            self.send_header('Content-Type', 'multipart/x-mixed-replace; boundary=FRAME')
+            self.end_headers()
+            try:
+                while True:
+                    can_stream = True
+                    if(camera_works):
+                        with output.condition:
+                            output.condition.wait()
+                            frame = output.frame
+                            arr = np.frombuffer(frame, np.uint8)
+                            image = cv2.imdecode(arr, cv2.IMREAD_COLOR)
+                            image = cv2.resize(image, (640,480))
+                            out.write(image)
+                    else:
+                        if(cap.isOpened()):
+                            ret, image = cap.read()
+                            image = cv2.resize(image, (640,480))
+                            _, frame = cv2.imencode('.JPEG', image)
+                            if ret==True:
+                                image = cv2.imdecode(frame, cv2.IMREAD_COLOR)
+                                image = cv2.resize(image, (640,480))
+                                out.write(image)
+                                # write the frame
+                                #out.write(image)
+                        else:
+                            can_stream = False
+                            print("cannot stream")
                     
-        #             if(can_stream):
-        #                 self.wfile.write(b'--FRAME\r\n')
-        #                 self.send_header('Content-Type', 'image/jpeg')
-        #                 self.send_header('Content-Length', len(frame))
-        #                 self.end_headers()
-        #                 self.wfile.write(frame)
-        #                 self.wfile.write(b'\r\n')
-        #     except Exception as e:
-        #         logging.warning(
-        #             'Removed streaming client %s: %s',
-        #             self.client_address, str(e))
+                    if(can_stream):
+                        self.wfile.write(b'--FRAME\r\n')
+                        self.send_header('Content-Type', 'image/jpeg')
+                        self.send_header('Content-Length', len(frame))
+                        self.end_headers()
+                        self.wfile.write(frame)
+                        self.wfile.write(b'\r\n')
+            except Exception as e:
+                logging.warning(
+                    'Removed streaming client %s: %s',
+                    self.client_address, str(e))
         else:
             self.send_error(404)
             self.end_headers()
@@ -133,7 +132,10 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
     def do_POST(self):
         content = PAGE.encode('utf-8')
         self.send_response(200)
+        self.send_header('Content-Type', 'text/html')
+        self.send_header('Content-Length', len(content))
         self.end_headers()
+        self.wfile.write(content)
         print(self.path)
 
 class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
