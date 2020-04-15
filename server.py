@@ -12,7 +12,7 @@ def index():
     #print(request.form)
     if request.method == 'POST':
         if "Arm" in request.form:
-            arm = True
+            armed = True
             print("Armed")
             pass
         elif "Start Camera" in request.form:
