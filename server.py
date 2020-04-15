@@ -4,10 +4,27 @@ from camera import Camera
 import cv2
 
 app = Flask(__name__)
+armed = False
+live_stream = False
+play_audio = False
 @app.route('/')
 def index():
+    if form.validate_on_submit():
+        if 'arm' in request.form:
+            arm = True
+            print("Armed")
+            pass
+        elif 'stream' in request.form:
+            live_stream = True
+            print("Live streaming")
+            pass
+        elif 'audio' in request.form:
+            play_audio = True
+            print("Sending audio")
+            pass
     """Video streaming home page."""
     return render_template('index.html')
+
 def gen(camera):
     """Video streaming generator function."""
     while True:
