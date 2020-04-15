@@ -35,9 +35,7 @@ PAGE="""\
             url : post_url,
             type: request_method,
             data : form_data
-        }).done(function(response){ //
-            $("#server-results").html(response);
-        });
+        })
     });
 </script>
 </html>
