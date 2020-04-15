@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response, request
 # Raspberry Pi camera module (requires picamera package, developed by Miguel Grinberg)
 from camera import Camera
 import cv2
@@ -7,18 +7,19 @@ app = Flask(__name__)
 armed = False
 live_stream = False
 play_audio = False
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    if form.validate_on_submit():
-        if 'arm' in request.form:
+    #print(request.form)
+    if request.method == 'POST':
+        if "Arm" in request.form:
             arm = True
             print("Armed")
             pass
-        elif 'stream' in request.form:
+        elif "Start Camera" in request.form:
             live_stream = True
             print("Live streaming")
             pass
-        elif 'audio' in request.form:
+        elif "Send Audio" in request.form:
             play_audio = True
             print("Sending audio")
             pass
