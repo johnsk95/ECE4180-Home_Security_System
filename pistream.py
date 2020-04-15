@@ -19,19 +19,32 @@ PAGE="""\
 </head>
 <body>
 <h1>PiCamera MJPEG Streaming Demo</h1>
-    <input type="button" value="Submit" onclick="addMsg()" method="post"/>
-    <button type="button">button2</button>
+    <form action="path/to/server/script" method="post" id="my_form">
+        <label>Name</label>
+        <input type="text" name="name" />
+        <label>Email</label>
+        <input type="email" name="email" />
+        <label>Website</label>
+        <input type="url" name="website" />
+        <input type="submit" name="submit" value="Submit Form" />
+        <div id="server-results"><!-- For server results --></div>
+    </form>
 </body>
 <script>
-function addMsg() {
-    var message = $('input[name=message]').val();
-    $.ajax({
-        type: "POST",
-        url: "/chat",
-        data: {'message': message},
-        cache: false
+    $("#my_form").submit(function(event){
+        event.preventDefault(); //prevent default action 
+        var post_url = $(this).attr("action"); //get form action url
+        var request_method = $(this).attr("method"); //get form GET/POST method
+        var form_data = $(this).serialize(); //Encode form elements for submission
+        
+        $.ajax({
+            url : post_url,
+            type: request_method,
+            data : form_data
+        }).done(function(response){ //
+            $("#server-results").html(response);
+        });
     });
-}
 </script>
 </html>
 """
