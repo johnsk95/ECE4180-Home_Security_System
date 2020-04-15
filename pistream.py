@@ -19,7 +19,8 @@ PAGE="""\
 </head>
 <body>
 <h1>PiCamera MJPEG Streaming Demo</h1>
-    <button type="submit" onclick="addMsg()">Submit</button>
+    <input type="button" value="Submit" onclick="addMsg()" method="post"/>
+    <button type="button">button2</button>
 </body>
 <script>
 function addMsg() {
@@ -126,7 +127,7 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
         self.send_header('Content-Length', len(content))
         self.end_headers()
         self.wfile.write(content)
-        print("post")
+        print(self.path)
 
 class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
     allow_reuse_address = True
