@@ -20,7 +20,9 @@ PAGE="""\
 <body>
 <h1>PiCamera MJPEG Streaming Demo</h1>
 <img src="stream.mjpg" width="640" height="480" />
-<button type="button">Click Me!</button>
+<form action="/submit-cat-photo">
+  <button type="submit">Submit</button>
+</form>
 </body>
 </html>
 """
@@ -108,7 +110,7 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
         else:
             self.send_error(404)
             self.end_headers()
-            
+
     def do_POST(self):
         content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
         post_data = self.rfile.read(content_length) # <--- Gets the data itself
