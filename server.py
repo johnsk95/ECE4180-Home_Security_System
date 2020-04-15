@@ -49,7 +49,7 @@ def gen(camera):
 @app.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(gen(Camera()),
+    return Response(gen(cam),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
@@ -58,9 +58,10 @@ if __name__ == '__main__':
     out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480))
     try:
         #TODO: need better way to test if camera is attached
-        with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
-            print("Camera attached")
-            camera_works = True
+        cam = Camera('output.avi')
+        print("Camera attached")
+        camera_works = True
+        
     except:
         camera_works = False
         cap = cv2.VideoCapture('dolce_faster.mp4')

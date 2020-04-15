@@ -10,15 +10,21 @@ import time
 import io
 import threading
 import picamera
+import cv2
+import numpy as np
 
 
 class Camera(object):
     thread = None  # background thread that reads frames from camera
     frame = None  # current frame is stored here by background thread
     last_access = 0  # time of last client access to the camera
+    out = None
+    
 
-    def initialize(self):
+    def initialize(self, output_file_name):
         if Camera.thread is None:
+            fourcc = cv2.VideoWriter_fourcc(*'XVID')
+            self.out = cv2.VideoWriter(output_file_name, fourcc, 20.0, (640,480))
             # start background frame thread
             Camera.thread = threading.Thread(target=self._thread)
             Camera.thread.start()
@@ -50,6 +56,12 @@ class Camera(object):
                 # store frame
                 stream.seek(0)
                 cls.frame = stream.read()
+
+                #write to output file
+                arr = np.frombuffer(cls.frame, np.uint8)
+                image = cv2.imdecode(arr, cv2.IMREAD_COLOR)
+                image = cv2.resize(image, (640,480))
+                cls.out.write(image)
 
                 # reset stream for next frame
                 stream.seek(0)
