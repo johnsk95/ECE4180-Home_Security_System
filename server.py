@@ -23,6 +23,8 @@ def index():
             play_audio = True
             print("Sending audio")
             pass
+    if request.method == 'GET':
+        print("No get methods")
     """Video streaming home page."""
     return render_template('index.html')
 
