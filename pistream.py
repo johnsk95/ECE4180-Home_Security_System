@@ -19,7 +19,7 @@ PAGE="""\
 </head>
 <body>
 <h1>PiCamera MJPEG Streaming Demo</h1>
-    <form action="/start-stream" method="post" id="my_form">
+    <form action="/test" method="post" id="my_form">
         <input type="submit" name="submit" value="Show Camera" />
         <div id="server-results"><!-- For server results --></div>
     </form>
@@ -27,7 +27,7 @@ PAGE="""\
 <script>
     $("#my_form").submit(function(event){
         event.preventDefault(); //prevent default action 
-        var post_url = $(this).attr("action"); //get form action url
+        var post_url = ""; //get form action url
         var request_method = $(this).attr("method"); //get form GET/POST method
         var form_data = $(this).serialize(); //Encode form elements for submission
         
@@ -41,6 +41,9 @@ PAGE="""\
     });
 </script>
 </html>
+"""
+SHOW_CAMERA="""\
+
 """
 
 
