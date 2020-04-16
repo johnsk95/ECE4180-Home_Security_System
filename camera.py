@@ -65,7 +65,7 @@ class Camera(object):
             with new_frame_ready:
                 new_frame_ready.wait()
                 print("write frame\n")
-            # frame = self.get_frame()
+            frame = self.get_frame()
             # self.write_frame(frame)
         self.write_thread = None
 
