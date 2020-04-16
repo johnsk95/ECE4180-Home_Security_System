@@ -62,6 +62,8 @@ if __name__ == '__main__':
         #TODO: need better way to test if camera is attached
         with picamera.PiCamera() as test_cam:
             print("Camera attached")
+            test_cam.close()
+
         cam = Camera('output.avi')
         cam.initialize()
         camera_works = True
@@ -70,4 +72,4 @@ if __name__ == '__main__':
         camera_works = False
         cap = cv2.VideoCapture('dolce_faster.mp4')
 
-    app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
+    app.run(host='0.0.0.0', port =8000, debug=True, threaded=True)
