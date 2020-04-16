@@ -16,6 +16,7 @@ import numpy as np
 
 class Camera(object):
     thread = None  # background thread that reads frames from camera
+    write_thread = None
     frame = None  # current frame is stored here by background thread
     last_access = 0  # time of last client access to the camera
     out = None
@@ -30,6 +31,9 @@ class Camera(object):
             Camera.thread = threading.Thread(target=self._thread)
             Camera.thread.start()
 
+            Camera.write_thread  = threading.Thread(target=self._write_thread)
+            Camera.write_thread.start()
+
             # wait until frames start to be available
             while self.frame is None:
                 time.sleep(0)
@@ -38,6 +42,17 @@ class Camera(object):
         Camera.last_access = time.time()
         self.initialize()
         return self.frame
+    
+    def write_frame(self, frame):
+        #write to output file
+        arr = np.frombuffer(frame, np.uint8)
+        image = cv2.imdecode(arr, cv2.IMREAD_COLOR)
+        image = cv2.resize(image, (640,480))
+        self.out.write(image)
+
+    def _write_thread(self):
+        frame = self.get_frame()
+        self.write_frame(frame)
 
     @classmethod
     def _thread(cls):
@@ -58,18 +73,13 @@ class Camera(object):
                 stream.seek(0)
                 cls.frame = stream.read()
 
-                #write to output file
-                arr = np.frombuffer(cls.frame, np.uint8)
-                image = cv2.imdecode(arr, cv2.IMREAD_COLOR)
-                image = cv2.resize(image, (640,480))
-                cls.out.write(image)
-
                 # reset stream for next frame
                 stream.seek(0)
                 stream.truncate()
 
                 # if there hasn't been any clients asking for frames in
                 # the last 10 seconds stop the thread
-                # if time.time() - cls.last_access > 10:
-                #     break
+                if time.time() - cls.last_access > 10:
+                    break
+                
         cls.thread = None
