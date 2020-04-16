@@ -62,8 +62,10 @@ if __name__ == '__main__':
             print("Camera attached")
             test_cam.close()
 
-        cam = Camera('output.avi')
+        cam = Camera()
         cam.initialize()
+        cam.set_output("output")
+        cam.start_record()
         camera_works = True
         
     except:
