@@ -70,4 +70,4 @@ if __name__ == '__main__':
         camera_works = False
         cap = cv2.VideoCapture('dolce_faster.mp4')
 
-    app.run(host='0.0.0.0', port =8000, debug=True, threaded=True)
+    app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)

@@ -36,9 +36,9 @@ class Camera(object):
             while self.frame is None:
                 time.sleep(0)
                 
-            self.write_to_file = True
-            Camera.write_thread  = threading.Thread(target=self._write_thread)
-            Camera.write_thread.start()
+            # self.write_to_file = True
+            # Camera.write_thread  = threading.Thread(target=self._write_thread)
+            # Camera.write_thread.start()
 
     def get_frame(self):
         Camera.last_access = time.time()
