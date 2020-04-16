@@ -91,7 +91,7 @@ class Camera(object):
                 frame_lock.release()
                 with new_frame_ready:
                     new_frame_ready.notify_all()
-
+                      
                 # reset stream for next frame
                 stream.seek(0)
                 stream.truncate()
