@@ -19,12 +19,13 @@ class Camera(object):
     frame = None  # current frame is stored here by background thread
     last_access = 0  # time of last client access to the camera
     out = None
-    
 
-    def initialize(self, output_file_name):
+    def __init__(self, output_file_name):
+        fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        self.out = cv2.VideoWriter(output_file_name, fourcc, 20.0, (640,480))
+
+    def initialize(self):
         if Camera.thread is None:
-            fourcc = cv2.VideoWriter_fourcc(*'XVID')
-            self.out = cv2.VideoWriter(output_file_name, fourcc, 20.0, (640,480))
             # start background frame thread
             Camera.thread = threading.Thread(target=self._thread)
             Camera.thread.start()
@@ -69,6 +70,6 @@ class Camera(object):
 
                 # if there hasn't been any clients asking for frames in
                 # the last 10 seconds stop the thread
-                if time.time() - cls.last_access > 10:
-                    break
+                # if time.time() - cls.last_access > 10:
+                #     break
         cls.thread = None
