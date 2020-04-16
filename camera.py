@@ -62,7 +62,8 @@ class Camera(object):
 
     def _write_thread(self):
         while(self.write_to_file):
-            new_frame_ready.wait()
+            with new_frame_ready:
+                new_frame_ready.wait()
             frame = self.get_frame()
             self.write_frame(frame)
         self.write_thread = None
@@ -88,7 +89,8 @@ class Camera(object):
                 frame_lock.acquire()
                 cls.frame = stream.read()
                 frame_lock.release()
-                new_frame_ready.notify_all()
+                with new_frame_ready:
+                    new_frame_ready.notify_all()
 
                 # reset stream for next frame
                 stream.seek(0)
