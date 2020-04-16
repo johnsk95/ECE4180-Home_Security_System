@@ -15,6 +15,7 @@ import numpy as np
 import copy
 
 frame_lock = threading.Lock()
+new_frame_ready = threading.Condition()
 class Camera(object):
     thread = None  # background thread that reads frames from camera
     write_thread = None
@@ -61,6 +62,7 @@ class Camera(object):
 
     def _write_thread(self):
         while(self.write_to_file):
+            new_frame_ready.wait()
             frame = self.get_frame()
             self.write_frame(frame)
         self.write_thread = None
@@ -86,6 +88,7 @@ class Camera(object):
                 frame_lock.acquire()
                 cls.frame = stream.read()
                 frame_lock.release()
+                new_frame_ready.notify_all()
 
                 # reset stream for next frame
                 stream.seek(0)
