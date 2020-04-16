@@ -24,8 +24,8 @@ class Camera(object):
     out = None
 
     def __init__(self, output_file_name):
-        fourcc = cv2.VideoWriter_fourcc(*'MP4V')
-        self.out = cv2.VideoWriter(output_file_name, fourcc, 20.0, (640,480))
+        fourcc = cv2.VideoWriter_fourcc('M','J','P','G')
+        self.out = cv2.VideoWriter(output_file_name, fourcc, 10, (640,480))
 
     def initialize(self):
         if Camera.thread is None:
