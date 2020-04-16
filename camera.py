@@ -12,8 +12,9 @@ import threading
 import picamera
 import cv2
 import numpy as np
+import copy
 
-
+frame_lock = threading.Lock()
 class Camera(object):
     thread = None  # background thread that reads frames from camera
     write_thread = None
@@ -23,7 +24,7 @@ class Camera(object):
     out = None
 
     def __init__(self, output_file_name):
-        fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        fourcc = cv2.VideoWriter_fourcc(*'MP4V')
         self.out = cv2.VideoWriter(output_file_name, fourcc, 20.0, (640,480))
 
     def initialize(self):
@@ -36,14 +37,17 @@ class Camera(object):
             while self.frame is None:
                 time.sleep(0)
                 
-            # self.write_to_file = True
-            # Camera.write_thread  = threading.Thread(target=self._write_thread)
-            # Camera.write_thread.start()
+            self.write_to_file = True
+            Camera.write_thread  = threading.Thread(target=self._write_thread)
+            Camera.write_thread.start()
 
     def get_frame(self):
         Camera.last_access = time.time()
         self.initialize()
-        return self.frame
+        frame_lock.acquire()
+        new_frame = copy.deepcopy(self.frame)
+        frame_lock.release()
+        return new_frame
     
     def write_frame(self, frame):
         #write to output file
@@ -78,7 +82,10 @@ class Camera(object):
                                                  use_video_port=True):
                 # store frame
                 stream.seek(0)
+
+                frame_lock.acquire()
                 cls.frame = stream.read()
+                frame_lock.release()
 
                 # reset stream for next frame
                 stream.seek(0)

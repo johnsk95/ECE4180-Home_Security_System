@@ -57,7 +57,7 @@ if __name__ == '__main__':
     camera_works = False
     cam = None
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480))
+    out = cv2.VideoWriter('output.mp4',fourcc, 20.0, (640,480))
     try:
         #TODO: need better way to test if camera is attached
         with picamera.PiCamera() as test_cam:
