@@ -32,13 +32,13 @@ class Camera(object):
             Camera.thread = threading.Thread(target=self._thread)
             Camera.thread.start()
 
-            self.write_to_file = True
-            Camera.write_thread  = threading.Thread(target=self._write_thread)
-            Camera.write_thread.start()
-
             # wait until frames start to be available
             while self.frame is None:
                 time.sleep(0)
+                
+            self.write_to_file = True
+            Camera.write_thread  = threading.Thread(target=self._write_thread)
+            Camera.write_thread.start()
 
     def get_frame(self):
         Camera.last_access = time.time()
