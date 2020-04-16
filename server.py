@@ -2,6 +2,7 @@ from flask import Flask, render_template, Response, request
 # Raspberry Pi camera module (requires picamera package, developed by Miguel Grinberg)
 from camera import Camera
 import cv2
+import picamera
 
 app = Flask(__name__)
 armed = False
@@ -59,9 +60,10 @@ if __name__ == '__main__':
     out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480))
     try:
         #TODO: need better way to test if camera is attached
-        with picamera.PiCamera() as camera:
+        with picamera.PiCamera() as test_cam:
             print("Camera attached")
         cam = Camera('output.avi')
+        cam.initialize()
         camera_works = True
         
     except:
