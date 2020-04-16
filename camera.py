@@ -17,6 +17,7 @@ import numpy as np
 class Camera(object):
     thread = None  # background thread that reads frames from camera
     write_thread = None
+    write_to_file = False
     frame = None  # current frame is stored here by background thread
     last_access = 0  # time of last client access to the camera
     out = None
@@ -31,6 +32,7 @@ class Camera(object):
             Camera.thread = threading.Thread(target=self._thread)
             Camera.thread.start()
 
+            self.write_to_file = True
             Camera.write_thread  = threading.Thread(target=self._write_thread)
             Camera.write_thread.start()
 
@@ -49,10 +51,15 @@ class Camera(object):
         image = cv2.imdecode(arr, cv2.IMREAD_COLOR)
         image = cv2.resize(image, (640,480))
         self.out.write(image)
+    
+    def shut_down_write(self):
+        self.write_to_file = False
 
     def _write_thread(self):
-        frame = self.get_frame()
-        self.write_frame(frame)
+        while(self.write_to_file):
+            frame = self.get_frame()
+            self.write_frame(frame)
+        self.write_thread = None
 
     @classmethod
     def _thread(cls):
@@ -83,3 +90,4 @@ class Camera(object):
                     break
                 
         cls.thread = None
+        cls.write_to_file = False
