@@ -16,10 +16,6 @@ def index():
             armed = True
             print("Armed")
             pass
-        elif "Disarm" in request.form:
-            armed = False
-            print("Disarmed")
-            pass
         elif "Start Camera" in request.form:
             live_stream = True
             print("Live streaming")
@@ -74,6 +70,7 @@ if __name__ == '__main__':
         
     except:
         camera_works = False
-        cap = cv2.VideoCapture('dolce_faster.mp4')
+        print('camera not detected!')
+        # cap = cv2.VideoCapture('dolce_faster.mp4')
 
-    app.run(host='192.168.88.213', port =8000, debug=True, threaded=True)
+    app.run(host='192.168.88.213', port =8000, debug=False, threaded=True)
