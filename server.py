@@ -15,6 +15,10 @@ def index():
             armed = True
             print("Armed")
             pass
+        elif "Disarm" in request.form:
+            armed = False
+            print("Disarmed")
+            pass
         elif "Start Camera" in request.form:
             live_stream = True
             print("Live streaming")
