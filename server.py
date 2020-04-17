@@ -2,6 +2,7 @@ from flask import Flask, render_template, Response, request
 # Raspberry Pi camera module (requires picamera package, developed by Miguel Grinberg)
 from camera import Camera
 import cv2
+import picamera
 
 app = Flask(__name__)
 armed = False
@@ -53,18 +54,24 @@ def gen(camera):
 @app.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(gen(Camera()),
+    return Response(gen(cam),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
     camera_works = False
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480))
+    cam = None
     try:
         #TODO: need better way to test if camera is attached
-        with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
+        with picamera.PiCamera() as test_cam:
             print("Camera attached")
-            camera_works = True
+            test_cam.close()
+
+        cam = Camera()
+        cam.initialize()
+        cam.set_output("output")
+        cam.start_record()
+        camera_works = True
+        
     except:
         camera_works = False
         cap = cv2.VideoCapture('dolce_faster.mp4')
