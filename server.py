@@ -3,11 +3,26 @@ from flask import Flask, render_template, Response, request
 from camera import Camera
 import cv2
 import picamera
+import time
+import board
+import busio
+import digitalio
+import adafruit_vl53l0x
 
-app = Flask(__name__)
-armed = False
+led = digitalio.DigitalInOut(board.D17)
+led.direction = digitalio.Direction.OUTPUT
+
+i2c = busio.I2C(board.SCL, board.SDA)
+lidar = adafruit_vl53l0x.VL53L0X(i2c)
+lidar.measurement_timing_budget = 200000
+
+trigger = True
+armed = True
 live_stream = False
 play_audio = False
+
+app = Flask(__name__)
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     #print(request.form)
@@ -21,7 +36,10 @@ def index():
             print("Disarmed")
             pass
         elif "Start Camera" in request.form:
-            live_stream = True
+            if live_stream:
+                live_stream = False
+            else:
+                live_stream = True
             print("Live streaming")
             pass
         elif "Send Audio" in request.form:
@@ -60,6 +78,13 @@ def video_feed():
 if __name__ == '__main__':
     camera_works = False
     cam = None
+
+    while armed:
+        dist = lidar.range
+        if (dist < 400) and (dist != 0):
+            #activate alarm
+        time.sleep(0.2)
+
     try:
         #TODO: need better way to test if camera is attached
         with picamera.PiCamera() as test_cam:
