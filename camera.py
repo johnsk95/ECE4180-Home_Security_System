@@ -12,19 +12,18 @@ import threading
 import picamera
 import cv2
 import numpy as np
+import copy
 
-
+frame_lock = threading.Lock()
 class Camera(object):
     thread = None  # background thread that reads frames from camera
+    write_to_file = False
     frame = None  # current frame is stored here by background thread
     last_access = 0  # time of last client access to the camera
     out = None
-    
 
-    def initialize(self, output_file_name):
+    def initialize(self):
         if Camera.thread is None:
-            fourcc = cv2.VideoWriter_fourcc(*'XVID')
-            self.out = cv2.VideoWriter(output_file_name, fourcc, 20.0, (640,480))
             # start background frame thread
             Camera.thread = threading.Thread(target=self._thread)
             Camera.thread.start()
@@ -33,10 +32,32 @@ class Camera(object):
             while self.frame is None:
                 time.sleep(0)
 
+
     def get_frame(self):
         Camera.last_access = time.time()
         self.initialize()
-        return self.frame
+        frame_lock.acquire()
+        new_frame = copy.deepcopy(self.frame)
+        frame_lock.release()
+        return new_frame
+    
+
+    @classmethod
+    def start_record(cls):
+        if cls.out is not None:
+            cls.write_to_file = True
+        else:
+            print("Cannot record without setting output file\n")
+
+    @classmethod
+    def stop_record(cls):
+        cls.write_to_file = False
+        cls.out = None
+
+    @classmethod
+    def set_output(cls, filename):
+        fourcc = cv2.VideoWriter_fourcc('M','J','P','G')
+        cls.out = cv2.VideoWriter(filename+".avi", fourcc, 10, (640,480))
 
     @classmethod
     def _thread(cls):
@@ -55,13 +76,15 @@ class Camera(object):
                                                  use_video_port=True):
                 # store frame
                 stream.seek(0)
-                cls.frame = stream.read()
 
-                #write to output file
-                arr = np.frombuffer(cls.frame, np.uint8)
-                image = cv2.imdecode(arr, cv2.IMREAD_COLOR)
-                image = cv2.resize(image, (640,480))
-                cls.out.write(image)
+                cls.frame = stream.read()
+                frame_lock.acquire()
+                if(cls.write_to_file):
+                    arr = np.frombuffer(cls.frame, np.uint8)
+                    image = cv2.imdecode(arr, cv2.IMREAD_COLOR)
+                    image = cv2.resize(image, (640,480))
+                    cls.out.write(image)
+                frame_lock.release()
 
                 # reset stream for next frame
                 stream.seek(0)
@@ -69,6 +92,8 @@ class Camera(object):
 
                 # if there hasn't been any clients asking for frames in
                 # the last 10 seconds stop the thread
-                if time.time() - cls.last_access > 10:
-                    break
+                # if time.time() - cls.last_access > 10:
+                #     break
+                
         cls.thread = None
+        cls.write_to_file = False
