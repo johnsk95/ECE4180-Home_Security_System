@@ -40,11 +40,31 @@ def activate_alarm():
 	camera.stop_recording()
 	camera.stop_preview
 		
+if __name__ == '__main__':
+    while armed:
+        dist = lidar.range
+        if (dist < 400) and (dist != 0):
+            #activate alarm
+        time.sleep(0.2)
+		        camera_works = False
+        cam = None
+		server = Server()
+		server.start_server()
+        # try:
+        #     #TODO: need better way to test if camera is attached
+        #     with picamera.PiCamera() as test_cam:
+        #         print("Camera attached")
+        #         test_cam.close()
 
-while trigger:
-	dist = lidar.range
-	if (dist < 300) and (dist != 0):
-		activate_alarm()
-	time.sleep(0.2)
+        #     cam = Camera()
+        #     cam.initialize()
+        #     cam.set_output("output")
+        #     cam.start_record()
+        #     camera_works = True
+            
+        # except:
+        #     camera_works = False
+        #     print('camera not detected!')
+        #     # cap = cv2.VideoCapture('dolce_faster.mp4')
 
 print('end!')

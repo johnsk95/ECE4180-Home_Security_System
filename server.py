@@ -6,22 +6,8 @@ import picamera
 import time
 import board
 import busio
-import digitalio
-import adafruit_vl53l0x
 
-led = digitalio.DigitalInOut(board.D17)
-led.direction = digitalio.Direction.OUTPUT
 
-i2c = busio.I2C(board.SCL, board.SDA)
-lidar = adafruit_vl53l0x.VL53L0X(i2c)
-lidar.measurement_timing_budget = 200000
-
-trigger = True
-armed = True
-live_stream = False
-play_audio = False
-
-app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -75,31 +61,16 @@ def video_feed():
     return Response(gen(cam),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
-if __name__ == '__main__':
-    camera_works = False
-    cam = None
 
-    while armed:
-        dist = lidar.range
-        if (dist < 400) and (dist != 0):
-            #activate alarm
-        time.sleep(0.2)
 
-    try:
-        #TODO: need better way to test if camera is attached
-        with picamera.PiCamera() as test_cam:
-            print("Camera attached")
-            test_cam.close()
+class Server(object):
+    trigger = True
+    armed = True
+    live_stream = False
+    play_audio = False
 
-        cam = Camera()
-        cam.initialize()
-        cam.set_output("output")
-        cam.start_record()
-        camera_works = True
-        
-    except:
-        camera_works = False
-        print('camera not detected!')
-        # cap = cv2.VideoCapture('dolce_faster.mp4')
+    
+    app = Flask(__name__)
 
-    app.run(host='192.168.88.213', port =8000, debug=False, threaded=True)
+    def start_server(self):
+        app.run(host='192.168.88.213', port =8000, debug=False, threaded=True)
