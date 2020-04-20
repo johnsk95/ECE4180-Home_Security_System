@@ -3,6 +3,7 @@ import board
 import busio
 import digitalio
 import adafruit_vl53l0x
+from server import Server
 from camera import Camera
 
 led = digitalio.DigitalInOut(board.D17)
@@ -28,26 +29,27 @@ def stream_camera():
 def play_sound():
 	return
 
-def activate_alarm():
-	print('alarm activated!')
-	camera.start_preview()
-	camera.start_recording(f'/home/pi/recordings/{timestamp}.h264')
-	for _ in range(10):
-	    led.value = True
-	    time.sleep(0.5)
-	    led.value = False
-	    time.sleep(0.5)
-	camera.stop_recording()
-	camera.stop_preview
+def activate_alarm(camera):
+	if(camera is not None):
+		print('alarm activated!')
+		camera.start_preview()
+		camera.start_recording(f'/home/pi/recordings/{timestamp}.h264')
+		for _ in range(10):
+			led.value = True
+			time.sleep(0.5)
+			led.value = False
+			time.sleep(0.5)
+		camera.stop_recording()
+		camera.stop_preview
 		
 if __name__ == '__main__':
-    while armed:
-        dist = lidar.range
-        if (dist < 400) and (dist != 0):
-            #activate alarm
-        time.sleep(0.2)
-		        camera_works = False
-        cam = None
+	while True:
+		dist = lidar.range
+		if (dist < 400) and (dist != 0):
+			activate_alarm(None)
+		time.sleep(0.2)
+		camera_works = False
+		cam = None
 		server = Server()
 		server.start_server()
         # try:
