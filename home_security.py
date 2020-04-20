@@ -43,6 +43,8 @@ def activate_alarm(camera):
 		camera.stop_preview
 		
 if __name__ == '__main__':
+	server = Server()
+	server.start_server()
 	while True:
 		dist = lidar.range
 		if (dist < 400) and (dist != 0):
@@ -50,8 +52,7 @@ if __name__ == '__main__':
 		time.sleep(0.2)
 		camera_works = False
 		cam = None
-		server = Server()
-		server.start_server()
+
         # try:
         #     #TODO: need better way to test if camera is attached
         #     with picamera.PiCamera() as test_cam:
