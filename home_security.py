@@ -3,7 +3,8 @@ import board
 import busio
 import digitalio
 import adafruit_vl53l0x
-from picamera import PiCamera
+from camera import Camera
+import picamera
 
 led = digitalio.DigitalInOut(board.D17)
 led.direction = digitalio.Direction.OUTPUT
