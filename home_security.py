@@ -3,7 +3,7 @@ import board
 import busio
 import digitalio
 import adafruit_vl53l0x
-from picamera import PiCamera
+from camera import Camera
 
 led = digitalio.DigitalInOut(board.D17)
 led.direction = digitalio.Direction.OUTPUT
@@ -16,7 +16,7 @@ trigger = True
 alarm = False
 
 timestamp = time.strftime('%b-%d-%Y_%H:%M', time.localtime())
-camera = PiCamera()
+#camera = PiCamera()
 
 def stream_camera():
 	camera.start_preview()
