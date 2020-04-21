@@ -5,6 +5,8 @@ import digitalio
 import adafruit_vl53l0x
 import server 
 from camera import Camera
+from signal import signal, SIGINT
+from sys import exit
 
 led = digitalio.DigitalInOut(board.D17)
 led.direction = digitalio.Direction.OUTPUT
@@ -57,6 +59,12 @@ def start_camera(camera):
 			server.attach_camera(cam)
 		except:
 			print('camera not detected!')
+
+def handler(signal_received, frame):
+    # Handle any cleanup here
+    print('SIGINT or CTRL-C detected. Exiting gracefully')
+	server.shutdown_server()
+    exit(0)
 		
 if __name__ == '__main__':
 
@@ -67,6 +75,7 @@ if __name__ == '__main__':
 	start_camera(cam)
 
 	while True:
+		print("testing lidar")
 		dist = lidar.range
 		if (dist < 400) and (dist != 0) and server.armed:
 			activate_alarm(cam)

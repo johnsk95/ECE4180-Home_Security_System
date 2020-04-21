@@ -12,7 +12,7 @@ live_stream = False
 play_audio = False
 camera = None
 cap = cv2.VideoCapture('dolce_faster.mp4')
-app = Flask('__main__')
+app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -68,6 +68,9 @@ def video_feed():
 
 def start_server():
     app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
+
+def shutdown_server():
+    exit()
 
 def attach_camera(cam):
     camera = cam
