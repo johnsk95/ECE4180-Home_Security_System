@@ -12,6 +12,7 @@ armed = True
 live_stream = False
 play_audio = False
 camera = None
+cap = cv2.VideoCapture('dolce_faster.mp4')
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
@@ -42,16 +43,15 @@ def index():
     """Video streaming home page."""
     return render_template('index.html')
 
-def gen(camera):
+def gen():
     """Video streaming generator function."""
     while True:
         frame = None
         frame_ready = False
-        #if(camera_works):
-        if(False):
+        if(camera is not None):
             frame = camera.get_frame()
             frame_ready = True
-        #else:
+        else:
             if(cap.isOpened()):
                 ret, image = cap.read()
                 image = cv2.resize(image, (640,480))
@@ -64,12 +64,12 @@ def gen(camera):
 @app.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(gen(cam),
+    return Response(gen(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def start_server():
-    self.app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
+    app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
 
-def attach_camera(camera):
-    self.camera = camera
+def attach_camera(cam):
+    camera = cam
 
