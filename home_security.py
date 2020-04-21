@@ -7,7 +7,6 @@ import adafruit_vl53l0x
 import server 
 from camera import Camera
 from signal import signal, SIGINT
-from sys import exit
 import threading
 
 led = digitalio.DigitalInOut(board.D17)
@@ -64,19 +63,20 @@ def start_camera(camera):
 
 def handler(signal_received, frame):
 	# Handle any cleanup here
-	print('SIGINT or CTRL-C detected. Exiting gracefully')
+	print('SIGINT or CTRL-C detected. Exiting')
 	server.shutdown_server()
+	sys.exit(0)
 
 		
 if __name__ == '__main__':
-
+	signal(SIGINT, handler)
 	server_thread = threading.Thread(target= server.start_server)
 	server_thread.start()
 
 	cam = Camera()
 	server.attach_camera(cam)
 	start_camera(cam)
-	print('system on')
+	print('system on! Press CTRL-C to exit')
 	while True:
 		dist = lidar.range
 		if (dist < 400) and (dist != 0) and server.armed:
