@@ -72,6 +72,7 @@ if __name__ == '__main__':
 			activate_alarm(cam)
 		if (server.live_stream and streaming_video):
 			start_camera(cam)
+			print("Live streaming")
 			#Add code here to start camera
 		if (server.play_audio):
 			print("streaming audio")

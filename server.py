@@ -31,11 +31,9 @@ def index():
                 live_stream = False
             else:
                 live_stream = True
-            print("Live streaming")
             pass
         elif "Send Audio" in request.form:
             play_audio = True
-            print("Sending audio")
             pass
     if request.method == 'GET':
         print("No get methods")
