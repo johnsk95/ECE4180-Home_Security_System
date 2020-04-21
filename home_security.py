@@ -35,15 +35,14 @@ def play_sound():
 def activate_alarm(camera):
 	if(camera is not None):
 		print('alarm activated!')
-		camera.start_preview()
-		camera.start_recording(f'/home/pi/recordings/{timestamp}.h264')
+		camera.set_output("alarm")
+		camera.start_record()
 		for _ in range(10):
 			led.value = True
 			time.sleep(0.5)
 			led.value = False
 			time.sleep(0.5)
-		camera.stop_recording()
-		camera.stop_preview
+		camera.stop_record()
 
 def start_camera(camera):
 	if(not recording):
