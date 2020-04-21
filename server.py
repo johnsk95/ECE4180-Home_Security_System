@@ -16,7 +16,9 @@ app = Flask('__main__')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    #print(request.form)
+    global armed
+    global live_stream
+    global play_audio
     if request.method == 'POST':
         if "Arm" in request.form:
             armed = True
