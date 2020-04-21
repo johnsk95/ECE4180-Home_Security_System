@@ -3,7 +3,7 @@ import board
 import busio
 import digitalio
 import adafruit_vl53l0x
-from server import Server
+import server 
 from camera import Camera
 
 led = digitalio.DigitalInOut(board.D17)
@@ -43,31 +43,31 @@ def activate_alarm(camera):
 		camera.stop_preview
 		
 if __name__ == '__main__':
-	server = Server()
+
 	server.start_server()
+	cam = None
+	try:
+		#TODO: need better way to test if camera is attached
+		with picamera.PiCamera() as test_cam:
+			print("Camera attached")
+			test_cam.close()
+
+		cam = Camera()
+		cam.initialize()
+		cam.set_output("output")
+		cam.start_record()
+		server.attach_camera(cam)
+	except:
+		print('camera not detected!')
+
+	server.attach_camera(cam)
+	
 	while True:
 		dist = lidar.range
 		if (dist < 400) and (dist != 0):
-			activate_alarm(None)
+			activate_alarm(cam)
 		time.sleep(0.2)
-		camera_works = False
 		cam = None
 
-        # try:
-        #     #TODO: need better way to test if camera is attached
-        #     with picamera.PiCamera() as test_cam:
-        #         print("Camera attached")
-        #         test_cam.close()
-
-        #     cam = Camera()
-        #     cam.initialize()
-        #     cam.set_output("output")
-        #     cam.start_record()
-        #     camera_works = True
-            
-        # except:
-        #     camera_works = False
-        #     print('camera not detected!')
-        #     # cap = cv2.VideoCapture('dolce_faster.mp4')
 
 print('end!')
