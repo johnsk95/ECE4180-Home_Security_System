@@ -1,3 +1,4 @@
+import os, sys
 import time
 import board
 import busio
@@ -16,42 +17,43 @@ i2c = busio.I2C(board.SCL, board.SDA)
 lidar = adafruit_vl53l0x.VL53L0X(i2c)
 lidar.measurement_timing_budget = 200000
 
-trigger = True
-alarm = False
 recording = False
 timestamp = time.strftime('%b-%d-%Y_%H:%M', time.localtime())
-#camera = PiCamera()
-
-def stream_camera():
-	camera.start_preview()
-	camera.start_recording(f'/home/pi/recordings/{timestamp}.h264')
-	sleep(10)
-	camera.stop_recording()
-	camera.stop_preview
 	
 def play_sound():
-	return
+	print('playing sound!')
+	for _ in range(3):
+		os.system('mpg321 siren.mp3')
+		time.sleep(0.3)
 
+def flash_led():
+	for _ in range(10):
+		led.value = True
+		time.sleep(0.5)
+		led.value = False
+		time.sleep(0.5)
+		
 def activate_alarm(camera):
+	sound_thread = threading.Thread(target=play_sound)
+	led_thread = threading.Thread(target=flash_led)
 	if(camera is not None):
 		print('alarm activated!')
+		play_sound()
 		camera.set_output("alarm")
 		camera.start_record()
-		for _ in range(10):
-			led.value = True
-			time.sleep(0.5)
-			led.value = False
-			time.sleep(0.5)
+		sound_thread.start()
+		led_thread.start()
+		led_thread.join()
+		sound_thread.join()
 		camera.stop_record()
+		print('alarm end')
 
 def start_camera(camera):
 	if(not recording):
 		try:
-			#TODO: need better way to test if camera is attached
 			with picamera.PiCamera() as test_cam:
 				print("Camera attached")
 				test_cam.close()
-
 			cam = Camera()
 			cam.initialize()
 			cam.set_output("output")
@@ -74,9 +76,8 @@ if __name__ == '__main__':
 	cam = Camera()
 	server.attach_camera(cam)
 	start_camera(cam)
-
+	print('system on')
 	while True:
-		print("testing lidar")
 		dist = lidar.range
 		if (dist < 400) and (dist != 0) and server.armed:
 			activate_alarm(cam)
@@ -87,11 +88,3 @@ if __name__ == '__main__':
 		if (server.play_audio):
 			print("streaming audio")
 		time.sleep(0.2)
-	
-	
-
-
-
-
-
-print('end!')

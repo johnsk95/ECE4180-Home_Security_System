@@ -67,7 +67,7 @@ def video_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def start_server():
-    app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
+    app.run(host='192.168.88.213', port =8000, debug=False, threaded=True)
 
 def shutdown_server():
     exit()
