@@ -7,6 +7,7 @@ import server
 from camera import Camera
 from signal import signal, SIGINT
 from sys import exit
+import threading
 
 led = digitalio.DigitalInOut(board.D17)
 led.direction = digitalio.Direction.OUTPUT
@@ -64,13 +65,14 @@ def handler(signal_received, frame):
 	# Handle any cleanup here
 	print('SIGINT or CTRL-C detected. Exiting gracefully')
 	server.shutdown_server()
-	exit(0)
+
 		
 if __name__ == '__main__':
 
-	server.start_server()
-	cam = None
+	server_thread = threading.Thread(target= server.start_server)
+	server_thread.start()
 
+	cam = Camera()
 	server.attach_camera(cam)
 	start_camera(cam)
 
@@ -86,6 +88,10 @@ if __name__ == '__main__':
 		if (server.play_audio):
 			print("streaming audio")
 		time.sleep(0.2)
+	
+	
+
+
 
 
 
