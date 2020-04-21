@@ -15,7 +15,7 @@ lidar.measurement_timing_budget = 200000
 
 trigger = True
 alarm = False
-
+recording = False
 timestamp = time.strftime('%b-%d-%Y_%H:%M', time.localtime())
 #camera = PiCamera()
 
@@ -41,33 +41,42 @@ def activate_alarm(camera):
 			time.sleep(0.5)
 		camera.stop_recording()
 		camera.stop_preview
+
+def start_camera(camera):
+	if(not recording):
+		try:
+			#TODO: need better way to test if camera is attached
+			with picamera.PiCamera() as test_cam:
+				print("Camera attached")
+				test_cam.close()
+
+			cam = Camera()
+			cam.initialize()
+			cam.set_output("output")
+			cam.start_record()
+			server.attach_camera(cam)
+		except:
+			print('camera not detected!')
 		
 if __name__ == '__main__':
 
 	server.start_server()
 	cam = None
-	try:
-		#TODO: need better way to test if camera is attached
-		with picamera.PiCamera() as test_cam:
-			print("Camera attached")
-			test_cam.close()
-
-		cam = Camera()
-		cam.initialize()
-		cam.set_output("output")
-		cam.start_record()
-		server.attach_camera(cam)
-	except:
-		print('camera not detected!')
 
 	server.attach_camera(cam)
-	
+	start_camera(cam)
+
 	while True:
 		dist = lidar.range
-		if (dist < 400) and (dist != 0):
+		if (dist < 400) and (dist != 0) and server.armed:
 			activate_alarm(cam)
+		if (server.live_stream and streaming_video):
+			start_camera(cam)
+			#Add code here to start camera
+		if (server.play_audio):
+			print("streaming audio")
 		time.sleep(0.2)
-		cam = None
+
 
 
 print('end!')

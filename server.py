@@ -7,13 +7,12 @@ import time
 import board
 import busio
 
-trigger = True
 armed = True
 live_stream = False
 play_audio = False
 camera = None
 cap = cv2.VideoCapture('dolce_faster.mp4')
-app = Flask(__name__)
+app = Flask('__main__')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
