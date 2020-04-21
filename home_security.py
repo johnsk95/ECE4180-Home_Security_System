@@ -61,10 +61,10 @@ def start_camera(camera):
 			print('camera not detected!')
 
 def handler(signal_received, frame):
-    # Handle any cleanup here
-    print('SIGINT or CTRL-C detected. Exiting gracefully')
+	# Handle any cleanup here
+	print('SIGINT or CTRL-C detected. Exiting gracefully')
 	server.shutdown_server()
-    exit(0)
+	exit(0)
 		
 if __name__ == '__main__':
 
