@@ -92,13 +92,17 @@ def start_server():
     if(test_camera):
         cam = Camera()
     data = ServerData(cam)
-    app.config.from_object(data)
+    #app.config.from_object(data)
+    app.config.update(
+        camera = cam,
+        test = 'works'
+    )
     app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
 
 
 def print_test():
     with app.app_context():
-        config = current_app.config
+        config = app.config
         print(config['test'])
     
 def start_camera(camera):
