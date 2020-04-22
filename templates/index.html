@@ -4,25 +4,31 @@
     <title>Home Security System</title>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
   </head>
+
+    
+  <div class = "header-content">
+    <h1>Home Security System</h1>
+  </div>
+
   <body>
 
     <div class = "intro-rect">
-      <h1>Home Security System</h1>
       <div class = "picture-holder">
        <div class = "picture">
         <img src="{{ url_for('video_feed') }}" width="100%" height="100%">
         </div>
          <div class = "picture-descript">
+          <form method="post" action="/">
+            <input type="submit" name="Start Camera" value="stream">
+            <input type="submit" name="Send Audio" value="audio">
+            <input type="submit" name="Arm" value="ARM">
+            <input type="submit" name="Disarm" value="DISARM">
+          </form>
          </div>
       </div>
      </div>
     
-    <form method="post" action="/">
-      <input type="submit" name="Start Camera" value="stream">
-      <input type="submit" name="Send Audio" value="audio">
-      <input type="submit" name="Arm" value="ARM">
-      <input type="submit" name="Disarm" value="DISARM">
-    </form>
+ 
     <hr>
   </body>
 </html>
