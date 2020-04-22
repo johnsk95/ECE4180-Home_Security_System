@@ -90,9 +90,9 @@ def start_server():
     #app.config.from_object(data)
     app.config.update(
         camera = cam,
-        test = 'works'
-        armed = True
-        record = False
+        test = 'works',
+        armed = True,
+        record = False,
         stream_audio = False
     )
     app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
