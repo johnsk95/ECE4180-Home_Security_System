@@ -99,7 +99,7 @@ def start_server():
 def print_test():
     with app.app_context():
         config = current_app.config
-        print(config.test)
+        print(config['test'])
     
 def start_camera(camera):
     try:
