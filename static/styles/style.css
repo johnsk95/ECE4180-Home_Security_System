@@ -122,11 +122,11 @@ h2{
 a { text-decoration: none; }
 
 button {
-
   background: transparent;
   border: none !important;
   font-size:0;
   margin-left:20px;
+  width: 50px;
 }
 
 .form-contents{
