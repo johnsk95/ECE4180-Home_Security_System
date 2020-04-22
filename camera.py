@@ -60,14 +60,15 @@ class Camera(object):
     @classmethod
     def set_output_current_time(cls):
         now = datetime.now()
-        date_str = now.strftime("%m/%d/%Y, %H:%M:%S")
+        date_str = now.strftime("%m/%d/%Y_%H:%M:%S")
         cls.set_output(date_str)
-        print("create file "+date_str)
 
     @classmethod
     def set_output(cls, filename):
         fourcc = cv2.VideoWriter_fourcc('M','J','P','G')
         cls.out = cv2.VideoWriter(filename+".avi", fourcc, 10, (640,480))
+        print("create file "+date_str)
+        print(cls.out)
 
     @classmethod
     def _thread(cls):
