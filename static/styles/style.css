@@ -29,20 +29,6 @@ input, textarea, h1, h3, h4, h5, h6, .title{
  line-height: 30px;
 }
 
-.header{
-  display: flex;                  
-  flex-direction: row;            
-  flex-wrap: nowrap;             
-  justify-content: space-between;
-  align-items: center;
-  height: 150px;
-  background-color: #0f0326;
-  border: 2px solid #0f0326;
-  position: fixed;
-  right: 0;
-  left: 0;
-  z-index: 999;
-}
 
 .header-content{
   display: flex;                  
@@ -115,6 +101,11 @@ button {
   border: none !important;
   font-size:0;
   margin-left:20px;
+}
+
+.header{
+  background-color: #B5D99C;
+  margin: 20px;
 }
 
 
