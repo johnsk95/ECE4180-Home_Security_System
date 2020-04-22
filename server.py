@@ -7,6 +7,7 @@ import picamera
 import time
 import board
 import busio
+import sys
 
 cap = cv2.VideoCapture('dolce_faster.mp4')
 app = Flask("app")
@@ -90,7 +91,7 @@ def start_server():
         stream_audio = False,
         ready = True
     )
-    app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
+    app.run(host='192.168.88.213', port =8000, debug=False, threaded=True)
     
 def start_camera(camera):
     camera.initialize()
@@ -135,4 +136,4 @@ def get_streaming_audio():
         return config['stream_audio']
 
 def shutdown_server():
-    exit()
+    sys.exit(0)

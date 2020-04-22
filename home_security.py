@@ -15,9 +15,6 @@ led.direction = digitalio.Direction.OUTPUT
 i2c = busio.I2C(board.SCL, board.SDA)
 lidar = adafruit_vl53l0x.VL53L0X(i2c)
 lidar.measurement_timing_budget = 200000
-
-recording = False
-timestamp = time.strftime('%b-%d-%Y_%H:%M', time.localtime())
 	
 def play_sound():
 	print('playing sound!')
@@ -26,22 +23,22 @@ def play_sound():
 		time.sleep(0.2)
 
 def flash_led():
-	for _ in range(25):
+	for _ in range(10):
 		led.value = True
-		time.sleep(0.2)
+		time.sleep(0.5)
 		led.value = False
-		time.sleep(0.2)
+		time.sleep(0.5)
 		
 def activate_alarm():
 	sound_thread = threading.Thread(target=play_sound)
 	led_thread = threading.Thread(target=flash_led)
 	print('alarm activated!')
-	play_sound()
 	server.start_recording_camera()
 	sound_thread.start()
 	led_thread.start()
 	led_thread.join()
 	sound_thread.join()
+	time.sleep(10)
 	server.stop_recording_camera()
 	print('alarm end')
 
