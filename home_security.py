@@ -75,4 +75,3 @@ if __name__ == '__main__':
 		# if (server.play_audio):
 		# 	print("streaming audio")
 		time.sleep(0.2)
-		print(server.get_armed())
