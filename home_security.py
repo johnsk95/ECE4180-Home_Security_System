@@ -63,7 +63,7 @@ if __name__ == '__main__':
 	print('system on! Press CTRL-C to exit')
 	while True:
 		dist = lidar.range
-		if (dist < 400) and (dist != 0) and server.armed:
+		if (dist < 400) and (dist != 0) and server.get_armed():
 			activate_alarm()
 		# if (server.live_stream and streaming_video):
 		# 	start_camera(cam)

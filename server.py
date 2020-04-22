@@ -128,5 +128,20 @@ def stop_streaming_camera():
         if(camera is not None):
             camera.stop_record()
 
+def get_armed():
+    with app.app_context():
+        config = app.config
+        return config['armed']
+
+def get_record():
+    with app.app_context():
+        config = app.config
+        return config['record']
+
+def get_streaming_audio():
+    with app.app_context():
+        config = app.config
+        return config['stream_audio']
+
 def shutdown_server():
     exit()
