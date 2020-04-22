@@ -62,7 +62,7 @@ class Camera(object):
         now = datetime.now()
         date_str = now.strftime("%m/%d/%Y, %H:%M:%S")
         cls.set_output(date_str)
-        print("create file "+data_str)
+        print("create file "+date_str)
 
     @classmethod
     def set_output(cls, filename):
