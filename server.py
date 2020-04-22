@@ -69,18 +69,26 @@ def video_feed():
     return Response(gen(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
+def get_server_camera():
+    with app.app_context():
+        return session['camera']
+
+def initialize_server_camera():
+    with app.app_context():
+        session['test'] = 'works'
+        if(test_camera()):
+            session['camera']= Camera()
+        else:
+            session['camera']= None
+
 def start_server():
-    #sess.init_app(app)
-    if(test_camera()):
-        app.session['camera']= Camera()
-    else:
-        app.session['camera']= None
-    #sess['test'] = 'works'
+    initialize_server_camera()
     app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
 
 
 def print_test():
-    print(app.session['test'])
+    with app.app_context():
+        print(session['test'])
     
 def test_camera():
     try:
@@ -104,12 +112,12 @@ def start_camera(camera):
         print('camera not detected!')
 
 def start_streaming_camera():
-    camera = app.session['camera']
+    camera = get_server_camera()
     if(camera is not None):
         start_camera(camera)
 
 def stop_streaming_camera():
-    camera = app.session['camera']
+    camera = get_server_camera()
     if(camera is not None):
         camera.stop_record()
 
