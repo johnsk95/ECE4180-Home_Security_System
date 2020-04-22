@@ -65,22 +65,22 @@ def gen(camera):
 @app.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
-    camera = flask.session['camera']
+    camera = app.session['camera']
     return Response(gen(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def start_server():
     #sess.init_app(app)
     if(test_camera()):
-        flask.session['camera']= Camera()
+        app.session['camera']= Camera()
     else:
-        flask.session['camera']= None
+        app.session['camera']= None
     #sess['test'] = 'works'
     app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
 
 
 def print_test():
-    print(sess['test'])
+    print(app.session['test'])
     
 def test_camera():
     try:
@@ -104,12 +104,12 @@ def start_camera(camera):
         print('camera not detected!')
 
 def start_streaming_camera():
-    camera = flask.session['camera']
+    camera = app.session['camera']
     if(camera is not None):
         start_camera(camera)
 
 def stop_streaming_camera():
-    camera = flask.session['camera']
+    camera = app.session['camera']
     if(camera is not None):
         camera.stop_record()
 
