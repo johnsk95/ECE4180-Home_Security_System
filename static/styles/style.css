@@ -43,7 +43,7 @@ input, textarea, h1, h3, h4, h5, h6, .title{
 }
 
 h1{
-  margin: 20px;
+  padding: 20px;
 }
 h2{
   text-align: left;
