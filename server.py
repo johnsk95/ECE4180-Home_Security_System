@@ -18,11 +18,11 @@ def index():
     global play_audio
     if request.method == 'POST':
         if "Arm" in request.form:
-            armed = True
+            app.config['armed'] = True
             print("Armed")
             pass
         elif "Disarm" in request.form:
-            armed = False
+            app.config['armed'] = False
             print("Disarmed")
             pass
         elif "Start Camera" in request.form:
