@@ -32,34 +32,20 @@ def flash_led():
 		led.value = False
 		time.sleep(0.2)
 		
-def activate_alarm(camera):
+def activate_alarm():
 	sound_thread = threading.Thread(target=play_sound)
 	led_thread = threading.Thread(target=flash_led)
-	if(camera is not None):
-		print('alarm activated!')
-		play_sound()
-		camera.set_output("alarm")
-		camera.start_record()
-		sound_thread.start()
-		led_thread.start()
-		led_thread.join()
-		sound_thread.join()
-		camera.stop_record()
-		print('alarm end')
+	print('alarm activated!')
+	play_sound()
+	server.start_streaming_camera()
+	sound_thread.start()
+	led_thread.start()
+	led_thread.join()
+	sound_thread.join()
+	server.stop_streaming_camera()
+	print('alarm end')
 
-def start_camera(camera):
-	if(not recording):
-		try:
-			with picamera.PiCamera() as test_cam:
-				print("Camera attached")
-				test_cam.close()
-			cam = Camera()
-			cam.initialize()
-			cam.set_output("output")
-			cam.start_record()
-			server.attach_camera(cam)
-		except:
-			print('camera not detected!')
+
 
 def handler(signal_received, frame):
 	# Handle any cleanup here
@@ -72,19 +58,17 @@ if __name__ == '__main__':
 	signal(SIGINT, handler)
 	server_thread = threading.Thread(target= server.start_server)
 	server_thread.start()
+	server.print_test()
 
-	cam = Camera()
-	server.attach_camera(cam)
-	start_camera(cam)
 	print('system on! Press CTRL-C to exit')
 	while True:
 		dist = lidar.range
 		if (dist < 400) and (dist != 0) and server.armed:
-			activate_alarm(cam)
-		if (server.live_stream and streaming_video):
-			start_camera(cam)
-			print("Live streaming")
-			#Add code here to start camera
-		if (server.play_audio):
-			print("streaming audio")
+			activate_alarm()
+		# if (server.live_stream and streaming_video):
+		# 	start_camera(cam)
+		# 	print("Live streaming")
+		# 	#Add code here to start camera
+		# if (server.play_audio):
+		# 	print("streaming audio")
 		time.sleep(0.2)

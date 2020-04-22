@@ -13,6 +13,9 @@ import picamera
 import cv2
 import numpy as np
 import copy
+from datetime import datetime
+
+
 
 frame_lock = threading.Lock()
 class Camera(object):
@@ -55,6 +58,12 @@ class Camera(object):
         cls.out = None
 
     @classmethod
+    def set_output_current_time(cls):
+        now = datetime.now()
+        date_str = now.strftime("%m/%d/%Y, %H:%M:%S")
+        cls.set_output(date_str)
+
+    @classmethod
     def set_output(cls, filename):
         fourcc = cv2.VideoWriter_fourcc('M','J','P','G')
         cls.out = cv2.VideoWriter(filename+".avi", fourcc, 10, (640,480))
@@ -92,8 +101,8 @@ class Camera(object):
 
                 # if there hasn't been any clients asking for frames in
                 # the last 10 seconds stop the thread
-                # if time.time() - cls.last_access > 10:
-                #     break
+                if time.time() - cls.last_access > 10 and not cls.write_to_file:
+                    break
                 
         cls.thread = None
-        cls.write_to_file = False
+        cls.stop_record()

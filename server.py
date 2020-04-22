@@ -1,4 +1,5 @@
-from flask import Flask, render_template, Response, request
+from flask import Flask, render_template, Response, request, session
+from flask.ext.session import Session
 # Raspberry Pi camera module (requires picamera package, developed by Miguel Grinberg)
 from camera import Camera
 import cv2
@@ -10,9 +11,10 @@ import busio
 armed = True
 live_stream = False
 play_audio = False
-camera = None
+
 cap = cv2.VideoCapture('dolce_faster.mp4')
 app = Flask(__name__)
+sess = Session()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -42,7 +44,7 @@ def index():
     """Video streaming home page."""
     return render_template('index.html')
 
-def gen():
+def gen(camera):
     """Video streaming generator function."""
     while True:
         frame = None
@@ -63,15 +65,39 @@ def gen():
 @app.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(gen(),
+    camera = session['camera']
+    return Response(gen(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
-def start_server():
+def start_server(camera):
+    sess.init_app(app)
     app.run(host='192.168.88.213', port =8000, debug=False, threaded=True)
+    sess['camera']= Camera()
+    sess['test'] = 'works'
+
+def print_test():
+    print(sess['test'])
+
+def start_camera(camera):
+    try:
+        with picamera.PiCamera() as test_cam:
+            print("Camera attached")
+            test_cam.close()
+        camera.initialize()
+        camera.set_output_current_time()
+        camera.start_record()
+    except:
+        print('camera not detected!')
+
+def start_streaming_camera():
+    camera = sess['camera']
+    if(camera is not None):
+        start_camera(camera)
+
+def stop_streaming_camera():
+    camera = sess['camera']
+    if(camera is not None):
+        camera.stop_record()
 
 def shutdown_server():
     exit()
-
-def attach_camera(cam):
-    camera = cam
-
