@@ -11,7 +11,10 @@ html{
   background-color: #ffffff;
 }
 
-
+.title-box{
+  background-color: #B5D99C;
+  margin: 20px;
+}
 
 
 .intro-rect{
@@ -103,10 +106,7 @@ button {
   margin-left:20px;
 }
 
-.header{
-  background-color: #B5D99C;
-  margin: 20px;
-}
+
 
 
 .item-form{
