@@ -43,6 +43,9 @@ input, textarea, h1, h3, h4, h5, h6, .title{
   margin-right:20px;
 }
 
+h1{
+  padding:20px;
+}
 h2{
   text-align: left;
   color: #F5F7DC;
