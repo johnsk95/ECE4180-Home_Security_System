@@ -86,6 +86,7 @@ def start_server():
     cam = None
     if(test_camera):
         cam = Camera()
+        camera.initialize()
     data = ServerData(cam)
     #app.config.from_object(data)
     app.config.update(
@@ -114,14 +115,14 @@ def start_camera(camera):
     except:
         print('camera not detected!')
 
-def start_streaming_camera():
+def start_recording_camera():
     with app.app_context():
         config = app.config
         camera = config['camera']
         if(camera is not None):
             start_camera(camera)
 
-def stop_streaming_camera():
+def stop_recording_camera():
     with app.app_context():
         config = app.config
         camera = config['camera']

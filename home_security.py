@@ -37,12 +37,12 @@ def activate_alarm():
 	led_thread = threading.Thread(target=flash_led)
 	print('alarm activated!')
 	play_sound()
-	server.start_streaming_camera()
+	server.start_recording_camera()
 	sound_thread.start()
 	led_thread.start()
 	led_thread.join()
 	sound_thread.join()
-	server.stop_streaming_camera()
+	server.stop_recording_camera()
 	print('alarm end')
 
 
