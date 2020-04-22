@@ -4,10 +4,17 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   </head>
   <body>
-    <div class = "purple-rect">
-      <h1>Home Security System</h1>
-      <center><img src="{{ url_for('video_feed') }}" width="640" height="480"></center>
-    <div>
+
+    <div class = "intro-rect">
+      <div class = "picture-holder">
+       <div class = "picture">
+        <img src="{{ url_for('video_feed') }}" width="640" height="480"><img src="websitepic_2.jpg" alt="Me at christmas market" width = "210" height = "310"></img>
+        </div>
+         <div class = "picture-descript">
+          <h1>Home Security System</h1>
+         </div>
+      </div>
+     </div>
     
     <form method="post" action="/">
       <input type="submit" name="Start Camera" value="stream">
