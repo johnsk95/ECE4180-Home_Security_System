@@ -14,7 +14,7 @@ play_audio = False
 
 cap = cv2.VideoCapture('dolce_faster.mp4')
 app = Flask(__name__)
-sess = Session()
+#sess = Session()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -65,17 +65,17 @@ def gen(camera):
 @app.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
-    camera = session['camera']
+    camera = flask.session['camera']
     return Response(gen(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def start_server():
-    sess.init_app(app)
+    #sess.init_app(app)
     if(test_camera()):
-        sess['camera']= Camera()
+        flask.session['camera']= Camera()
     else:
-        sess['camera']= None
-    sess['test'] = 'works'
+        flask.session['camera']= None
+    #sess['test'] = 'works'
     app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
 
 
@@ -104,12 +104,12 @@ def start_camera(camera):
         print('camera not detected!')
 
 def start_streaming_camera():
-    camera = sess['camera']
+    camera = flask.session['camera']
     if(camera is not None):
         start_camera(camera)
 
 def stop_streaming_camera():
-    camera = sess['camera']
+    camera = flask.session['camera']
     if(camera is not None):
         camera.stop_record()
 
