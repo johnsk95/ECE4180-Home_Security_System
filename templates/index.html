@@ -14,14 +14,18 @@
       <h3>Alarm Status : Armed</h3>
       <div class = "picture-holder">
        <div class = "picture">
-        <img src="{{ url_for('video_feed') }}" width="100" height="100">
+        <img src="{{ url_for('video_feed') }}" width="100%" height="100%">
         </div>
-        <form method="post" action="/" width="40" height="20">
-            <input type="submit" name="record" value="Record">
-            <input type="submit" name="arm" value="Arm">   
-        </form>
-              
-
+        <div class = "picture-descript">
+          <form method="post" action="/">
+            <div class= "item-form">
+              <input type="submit" name="record" value="Record">
+            </div>
+            <div class= "item-form">
+              <input type="submit" name="arm" value="Arm">
+            </div>      
+          </form>
+        </div>
       </div>
      </div>
     
