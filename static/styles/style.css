@@ -1,0 +1,171 @@
+  
+html, body {
+  height:100%;
+  padding:0;
+  margin:0;
+  font-family:verdana;
+  font-size:16px;
+ }
+
+html{
+  background-color: #ffffff;
+}
+
+.title-box{
+  background-color: #B5D99C;
+  height: 150px;
+}
+
+
+.intro-rect{
+  background-color: #7D7D7D;
+  border-bottom: 2px solid #0f0326;
+  display: inline-block;
+  background-clip: content-box;
+  margin-bottom: 20px;
+  width: 100%;
+  
+}
+
+input, textarea, h1, h3, h4, h5, h6, .title{
+  color: #0f0326;
+ line-height: 30px;
+
+}
+
+
+.header-content{
+  display: flex;                  
+  flex-direction: row;            
+  flex-wrap: nowrap;             
+  justify-content: flex-end;
+  align-items: center;
+  margin-right:20px;
+}
+
+h1{
+  padding:20px;
+}
+h2{
+  text-align: left;
+  color: #F5F7DC;
+  margin:20px;
+}
+
+#header-button {
+  text-align: right;
+}
+
+#header-button a {
+  font-weight: bold;
+  transition: all 500ms;
+}
+  
+#header-button a:hover {
+  font-size:20px;
+  font-size-adjust:10px;
+  color: #F5F7DC;
+}
+
+.picture{
+  border: 3px solid #B5D99C;
+  line-height: 0;
+  box-sizing: border-box;
+}
+
+.dark-picture{
+  border: 3px solid #0f0326;
+  line-height: 0;
+  box-sizing: border-box;
+}
+
+.picture-holder{
+  display: flex;                  
+  flex-direction: row;            
+  flex-wrap: nowrap;             
+  justify-content: left;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.picture-descript{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.item-holder{
+  border: 2px solid #0f0326;
+  background-color: #B5D99C;
+  margin: 20px;
+  border-radius: 25px;
+}
+
+a { text-decoration: none; }
+
+button {
+  background: transparent;
+  border: none !important;
+  font-size:0;
+  margin-left:20px;
+}
+
+
+
+
+.item-form{
+  display: flex;                  
+  flex-direction: column;            
+  flex-wrap: nowrap;                
+  justify-content: right;
+  align-items: right;
+}
+
+
+input, textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+  font-size: 1.1em;
+  line-height: 1.6em;
+  font-family:verdana;
+}
+
+
+textarea{
+  resize: none;
+  height: 300px;
+}
+
+.title{
+  padding-left: 20px;
+  padding-top: 50px;
+  display: inline-block
+}
+
+.standard-button{
+  background-color: #0f0326;
+  border: none;
+  color: #F5F7DC;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family:verdana;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.button-holder{
+  margin: 20px;
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  
+}
