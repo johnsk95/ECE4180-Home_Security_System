@@ -117,14 +117,6 @@ button {
   margin-left:20px;
 }
 
-.form-contents{
-  display:flex;
-  flex-direction: row;
-  justify-content:right;
-  align-content:right;
-  padding-left: 20px;
-  padding-right: 20px;
-}
 
 .item-form{
   display: flex;                  
@@ -135,6 +127,17 @@ button {
 }
 
 
+input, textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+  font-size: 1.1em;
+  line-height: 1.6em;
+  font-family:verdana;
+}
 
 
 textarea{
