@@ -4,8 +4,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   </head>
   <body>
-    <h1>Home Security System</h1>
-    <center><img src="{{ url_for('video_feed') }}" width="640" height="480"></center>
+    <div class = "purple-rect">
+      <h1>Home Security System</h1>
+      <center><img src="{{ url_for('video_feed') }}" width="640" height="480"></center>
+    <div>
+    
     <form method="post" action="/">
       <input type="submit" name="Start Camera" value="stream">
       <input type="submit" name="Send Audio" value="audio">
