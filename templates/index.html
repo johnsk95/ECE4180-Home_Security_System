@@ -5,14 +5,16 @@
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
   </head>
 
-    
-  <h1>Home Security System</h1>
+  <div background-color= "#B5D99C">
+    <h1>Home Security System</h1>
+  </div>
+  
 
   <body>
     <div class = "intro-rect">
+      <h2>Camera Status : Not Recording</h2>
+      <h2>Alarm Status : Armed</h2>
       <div class = "picture-holder">
-        <h2>Camera Status : Not Recording</h2>
-        <h2>Alarm Status : Armed</h2>
        <div class = "picture">
         <img src="{{ url_for('video_feed') }}" width="100%" height="100%">
         </div>
