@@ -86,6 +86,7 @@ def start_server():
     cam = None
     if(test_camera):
         cam = Camera()
+        print("initialize camera")
         cam.initialize()
     data = ServerData(cam)
     #app.config.from_object(data)
