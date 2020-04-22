@@ -58,7 +58,10 @@ if __name__ == '__main__':
 	signal(SIGINT, handler)
 	server_thread = threading.Thread(target= server.start_server)
 	server_thread.start()
-	server.print_test()
+	
+	while not server.get_ready():
+		print("not ready")
+		time.sleep(0.2)
 
 	print('system on! Press CTRL-C to exit')
 	while True:

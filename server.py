@@ -65,19 +65,13 @@ def video_feed():
     return Response(gen(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
  
-class ServerData():
-    camera = None
-    test = "not working"
-    def __init__(self, cam):   
-        self.camera = cam
-        self.test = "works!"
 
 def test_camera():
     try:
         with picamera.PiCamera() as test_cam:
             print("Camera attached")
             test_cam.close()
-            return True
+        return True
     except:
         print('camera not detected!')
         return False
@@ -85,21 +79,20 @@ def test_camera():
 
 def start_server():
     cam = None
-    if(test_camera):
+    if(test_camera()):
         cam = Camera()
         print("initialize camera")
         cam.initialize()
-    data = ServerData(cam)
-    #app.config.from_object(data)
+
     app.config.update(
         camera = cam,
         test = 'works',
         armed = True,
         record = False,
-        stream_audio = False
+        stream_audio = False,
+        ready = True
     )
     app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
-
 
 def print_test():
     with app.app_context():
@@ -130,6 +123,13 @@ def stop_recording_camera():
         camera = config['camera']
         if(camera is not None):
             camera.stop_record()
+def get_ready():
+    with app.app_context():
+        config = app.config
+        if('ready' not in config):
+            return False
+        else:
+            return config['ready']
 
 def get_armed():
     with app.app_context():
