@@ -1,5 +1,5 @@
 from flask import Flask, render_template, Response, request, session
-from flask.ext.session import Session
+from flask_session import Session
 # Raspberry Pi camera module (requires picamera package, developed by Miguel Grinberg)
 from camera import Camera
 import cv2
@@ -69,14 +69,28 @@ def video_feed():
     return Response(gen(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
-def start_server(camera):
+def start_server():
     sess.init_app(app)
-    app.run(host='192.168.88.213', port =8000, debug=False, threaded=True)
-    sess['camera']= Camera()
+    if(test_camera()):
+        sess['camera']= Camera()
+    else:
+        sess['camera']= None
     sess['test'] = 'works'
+    app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
+
 
 def print_test():
     print(sess['test'])
+    
+def test_camera():
+    try:
+        with picamera.PiCamera() as test_cam:
+            print("Camera attached")
+            test_cam.close()
+        return True
+    except:
+        print('camera not detected!')
+        return False
 
 def start_camera(camera):
     try:
