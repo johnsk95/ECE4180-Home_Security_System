@@ -62,6 +62,7 @@ class Camera(object):
         now = datetime.now()
         date_str = now.strftime("%m/%d/%Y, %H:%M:%S")
         cls.set_output(date_str)
+        print("create file "+data_str)
 
     @classmethod
     def set_output(cls, filename):
@@ -88,7 +89,7 @@ class Camera(object):
 
                 cls.frame = stream.read()
                 frame_lock.acquire()
-                if(cls.write_to_file):
+                if(cls.write_to_file and cls.out is not None):
                     arr = np.frombuffer(cls.frame, np.uint8)
                     image = cv2.imdecode(arr, cv2.IMREAD_COLOR)
                     image = cv2.resize(image, (640,480))
