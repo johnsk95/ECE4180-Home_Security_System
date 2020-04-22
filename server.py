@@ -8,13 +8,8 @@ import time
 import board
 import busio
 
-armed = True
-live_stream = False
-play_audio = False
-
 cap = cv2.VideoCapture('dolce_faster.mp4')
 app = Flask("app")
-#sess = Session()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -96,6 +91,9 @@ def start_server():
     app.config.update(
         camera = cam,
         test = 'works'
+        armed = True
+        record = False
+        stream_audio = False
     )
     app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
 
@@ -117,16 +115,18 @@ def start_camera(camera):
         print('camera not detected!')
 
 def start_streaming_camera():
-    config = current_app.config
-    camera = config.camera
-    if(camera is not None):
-        start_camera(camera)
+    with app.app_context():
+        config = app.config
+        camera = config['camera']
+        if(camera is not None):
+            start_camera(camera)
 
 def stop_streaming_camera():
-    config = current_app.config
-    camera = config.camera
-    if(camera is not None):
-        camera.stop_record()
+    with app.app_context():
+        config = app.config
+        camera = config['camera']
+        if(camera is not None):
+            camera.stop_record()
 
 def shutdown_server():
     exit()
