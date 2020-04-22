@@ -13,7 +13,6 @@ html{
 
 .title-box{
   background-color: #B5D99C;
-  margin: 20px;
 }
 
 
@@ -30,6 +29,7 @@ html{
 input, textarea, h1, h3, h4, h5, h6, .title{
   color: #0f0326;
  line-height: 30px;
+
 }
 
 
@@ -40,6 +40,10 @@ input, textarea, h1, h3, h4, h5, h6, .title{
   justify-content: flex-end;
   align-items: center;
   margin-right:20px;
+}
+
+h1{
+  margin: 20px;
 }
 h2{
   text-align: left;
