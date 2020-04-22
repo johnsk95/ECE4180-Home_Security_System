@@ -86,18 +86,12 @@ def start_server():
 
     app.config.update(
         camera = cam,
-        test = 'works',
         armed = True,
         record = False,
         stream_audio = False,
         ready = True
     )
     app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
-
-def print_test():
-    with app.app_context():
-        config = app.config
-        print(config['test'])
     
 def start_camera(camera):
     try:
