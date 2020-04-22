@@ -77,10 +77,11 @@ def test_camera():
         with picamera.PiCamera() as test_cam:
             print("Camera attached")
             test_cam.close()
-        return True
+            return True
     except:
         print('camera not detected!')
         return False
+    return False
 
 def start_server():
     cam = None
