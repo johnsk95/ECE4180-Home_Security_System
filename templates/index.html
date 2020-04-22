@@ -2,17 +2,17 @@
 <html>
   <head>
     <title>Home Security System</title>
-    <link rel="stylesheet" href="style.css">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
   </head>
   <body>
 
     <div class = "intro-rect">
+      <h1>Home Security System</h1>
       <div class = "picture-holder">
        <div class = "picture">
         <img src="{{ url_for('video_feed') }}" width="50%" height="50%">
         </div>
          <div class = "picture-descript">
-          <h1>Home Security System</h1>
          </div>
       </div>
      </div>
