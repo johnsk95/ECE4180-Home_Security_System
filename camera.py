@@ -59,18 +59,15 @@ class Camera(object):
 
     @classmethod
     def set_output_current_time(cls):
-        now = datetime.now()
         date_str = time.strftime('%b-%d-%Y_%H:%M', time.localtime())
         cls.set_output(date_str)
-        print("create file "+date_str)
 
     @classmethod
     def set_output(cls, filename):
         fourcc = cv2.VideoWriter_fourcc('M','J','P','G')
         cls.out = cv2.VideoWriter(filename+".avi", fourcc, 10, (640,480))
-        print("create file dd "+filename)
-        print(cls.out)
-        
+        print("create file "+filename)
+
     @classmethod
     def _thread(cls):
         with picamera.PiCamera() as camera:
