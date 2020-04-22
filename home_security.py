@@ -23,14 +23,14 @@ def play_sound():
 	print('playing sound!')
 	for _ in range(3):
 		os.system('mpg321 siren.mp3')
-		time.sleep(0.3)
+		time.sleep(0.2)
 
 def flash_led():
-	for _ in range(10):
+	for _ in range(25):
 		led.value = True
-		time.sleep(0.5)
+		time.sleep(0.2)
 		led.value = False
-		time.sleep(0.5)
+		time.sleep(0.2)
 		
 def activate_alarm(camera):
 	sound_thread = threading.Thread(target=play_sound)
