@@ -14,9 +14,6 @@ app = Flask("app")
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    global armed
-    global live_stream
-    global play_audio
     if request.method == 'POST':
         if "Arm" in request.form:
             app.config['armed'] = True
@@ -96,15 +93,9 @@ def start_server():
     app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
     
 def start_camera(camera):
-    try:
-        with picamera.PiCamera() as test_cam:
-            print("Camera attached")
-            test_cam.close()
-        camera.initialize()
-        camera.set_output_current_time()
-        camera.start_record()
-    except:
-        print('camera not detected!')
+    camera.initialize()
+    camera.set_output_current_time()
+    camera.start_record()
 
 def start_recording_camera():
     with app.app_context():
@@ -119,6 +110,7 @@ def stop_recording_camera():
         camera = config['camera']
         if(camera is not None):
             camera.stop_record()
+
 def get_ready():
     with app.app_context():
         config = app.config
