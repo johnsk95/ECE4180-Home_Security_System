@@ -13,7 +13,7 @@ live_stream = False
 play_audio = False
 
 cap = cv2.VideoCapture('dolce_faster.mp4')
-app = Flask(__name__)
+app = Flask("app")
 #sess = Session()
 
 @app.route('/', methods=['GET', 'POST'])
@@ -97,8 +97,9 @@ def start_server():
 
 
 def print_test():
-    config = current_app.config
-    print(config.test)
+    with app.app_context():
+        config = current_app.config
+        print(config.test)
     
 def start_camera(camera):
     try:
