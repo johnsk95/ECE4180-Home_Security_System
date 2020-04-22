@@ -67,7 +67,7 @@ class Camera(object):
     def set_output(cls, filename):
         fourcc = cv2.VideoWriter_fourcc('M','J','P','G')
         cls.out = cv2.VideoWriter(filename+".avi", fourcc, 10, (640,480))
-        print("create file "+date_str)
+        print("create file "+filename)
         print(cls.out)
 
     @classmethod
