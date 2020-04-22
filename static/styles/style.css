@@ -132,8 +132,8 @@ button {
   flex-direction: row;
   justify-content:right;
   align-content:right;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .item-form{
@@ -142,6 +142,7 @@ button {
   flex-wrap: nowrap;                
   justify-content: right;
   align-items: right;
+  width: 50px;
 }
 
 
