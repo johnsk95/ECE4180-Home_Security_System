@@ -65,7 +65,7 @@ def gen(camera):
 @app.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
-    camera = app.session['camera']
+    camera = session['camera']
     return Response(gen(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
@@ -82,13 +82,14 @@ def initialize_server_camera():
             session['camera']= None
 
 def start_server():
-    initialize_server_camera()
     app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
-
+    initialize_server_camera()
+    
 
 def print_test():
     with app.app_context():
-        print(session['test'])
+        test_string = session['test']
+        print(test_string)
     
 def test_camera():
     try:
