@@ -11,6 +11,7 @@ import busio
 cap = cv2.VideoCapture('dolce_faster.mp4')
 app = Flask("app")
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     global armed
@@ -26,13 +27,14 @@ def index():
             print("Disarmed")
             pass
         elif "Start Camera" in request.form:
-            if live_stream:
-                live_stream = False
+            record = app.config['record']
+            if record:
+                app.config['record'] = False
             else:
-                live_stream = True
+                app.config['record'] = True
             pass
         elif "Send Audio" in request.form:
-            play_audio = True
+            app.config['stream_audio'] = True
             pass
     if request.method == 'GET':
         print("No get methods")
