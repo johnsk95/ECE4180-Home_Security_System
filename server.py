@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response, request, session
+from flask import current_app, Flask, render_template, Response, request, session
 from flask_session import Session
 # Raspberry Pi camera module (requires picamera package, developed by Miguel Grinberg)
 from camera import Camera
@@ -65,32 +65,18 @@ def gen(camera):
 @app.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
-    camera = session['camera']
+    config = current_app.config
+    camera = config.camera
     return Response(gen(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+ 
+class ServerData():
+    camera = None
+    test = "not working"
+    def __init__(self, cam):   
+        self.camera = cam
+        self.test = "works!"
 
-def get_server_camera():
-    with app.app_context():
-        return session['camera']
-
-def initialize_server_camera():
-    with app.app_context():
-        session['test'] = 'works'
-        if(test_camera()):
-            session['camera']= Camera()
-        else:
-            session['camera']= None
-
-def start_server():
-    app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
-    initialize_server_camera()
-    
-
-def print_test():
-    with app.app_context():
-        test_string = session['test']
-        print(test_string)
-    
 def test_camera():
     try:
         with picamera.PiCamera() as test_cam:
@@ -101,6 +87,19 @@ def test_camera():
         print('camera not detected!')
         return False
 
+def start_server():
+    cam = None
+    if(test_camera):
+        cam = Camera()
+    data = ServerData(cam)
+    app.config.from_object(data)
+    app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
+
+
+def print_test():
+    config = current_app.config
+    print(config.test)
+    
 def start_camera(camera):
     try:
         with picamera.PiCamera() as test_cam:
@@ -113,12 +112,14 @@ def start_camera(camera):
         print('camera not detected!')
 
 def start_streaming_camera():
-    camera = get_server_camera()
+    config = current_app.config
+    camera = config.camera
     if(camera is not None):
         start_camera(camera)
 
 def stop_streaming_camera():
-    camera = get_server_camera()
+    config = current_app.config
+    camera = config.camera
     if(camera is not None):
         camera.stop_record()
 
