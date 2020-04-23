@@ -20,7 +20,7 @@
         </div>
         <div class = "picture-descript">
           <form method="post" action="/">
-            <input type="submit" name="record" value="Record" onclick="save()" >
+            <input type="submit" name="record" value="Record" id="submit_btn" >
             <input type="submit" name="arm" value="Arm">      
           </form>
         </div>
@@ -30,9 +30,22 @@
   </body>
 
   <script>
-    function save(){
-        $('#record').val('now record');
-        $('#form').submit();
-    }
+  $(document).ready(function () {
+      $('#submit_btn').click(function (e) {
+          e.preventDefault();
+          $(this).prev().text('Processing ...');
+          $.ajax({
+              cache: false,
+              type: "POST",
+              dataType: "json",
+              data: $('#form1').serialize(),
+              url: "echo/json",
+              complete: function (HttpRequest, textStatus) {
+                  $(this).val('Create');
+              }
+          });
+          return false;
+      });
+  });
   </script>
 </html>
