@@ -25,6 +25,7 @@ def index():
             print("Disarmed")
             pass
         elif "Record" in request.form:
+            print("Record")
             record = app.config['record']
             if record:
                 app.config['record'] = False
