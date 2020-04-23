@@ -17,12 +17,12 @@ app = Flask("app")
 def index():
     if request.method == 'POST':
         if "Arm" in request.form:
-            if app.config['armed'] == True
-                app.config['armed'] = False
-                print("Disarmed")
-            else:
-                app.config['armed'] = True
-                print("Armed")
+            app.config['armed'] = True
+            print("Armed")
+            pass
+        elif "Disarm" in request.form:
+            app.config['armed'] = False
+            print("Disarmed")
             pass
         elif "Record" in request.form:
             record = app.config['record']

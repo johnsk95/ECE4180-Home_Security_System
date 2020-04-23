@@ -59,7 +59,7 @@ class Camera(object):
 
     @classmethod
     def set_output_current_time(cls):
-        date_str = time.strftime('/recordings/%b-%d-%Y_%H:%M', time.localtime())
+        date_str = time.strftime('%b-%d-%Y_%H:%M', time.localtime())
         cls.set_output(date_str)
 
     @classmethod
