@@ -20,7 +20,7 @@
         </div>
         <div class = "picture-descript">
           <form method="post" action="/">
-            <input type="submit" name="record" value="Record" onclick="return changeText('submitbutton');">
+            <input type="submit" name="record" value="Record" onclick="save()" >
             <input type="submit" name="arm" value="Arm">      
           </form>
         </div>
@@ -29,11 +29,10 @@
     <hr>
   </body>
 
-  <script type="text/javascript"> 
-    function changeText(submitId){
-        var submit = document.getElementById(submitId);
-        submit.value = 'Loading...';
-        return false;
-    };
+  <script>
+    function save(){
+        $('#record').val('now record');
+        $('#form').submit();
+    }
   </script>
 </html>
