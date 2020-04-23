@@ -9,6 +9,24 @@
     <h1>Home Security System</h1>
   </div>
   
+<script type="text/javascript">
+  function change_arm(el)
+    {
+      if (el.value === "Arm")
+        el.value = "Disarm"
+      else
+        el.value = "Arm"
+    }
+
+  function change_record(el)
+  {
+    if (el.value === "Record")
+      el.value = "Stop"
+    else
+      el.value = "Record"
+  }
+</script>
+
 
   <body>
     <div class = "intro-rect">
@@ -20,8 +38,8 @@
         </div>
         <div class = "picture-descript">
           <form method="post" action="/">
-            <input type="submit" name="record" value="Record">
-            <input type="submit" name="arm" value="Arm">      
+            <input type="submit" onclick="return change_record(this);" name="record" value="Record">
+            <input type="submit" onclick="return change_record(this);" name="arm" value="Arm">      
           </form>
         </div>
       </div>

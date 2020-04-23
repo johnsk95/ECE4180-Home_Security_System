@@ -17,22 +17,19 @@ app = Flask("app")
 def index():
     if request.method == 'POST':
         if "Arm" in request.form:
-            app.config['armed'] = True
-            print("Armed")
+            if app.config['armed'] == True
+                app.config['armed'] = False
+                print("Disarmed")
+            else:
+                app.config['armed'] = True
+                print("Armed")
             pass
-        elif "Disarm" in request.form:
-            app.config['armed'] = False
-            print("Disarmed")
-            pass
-        elif "Start Camera" in request.form:
+        elif "Record" in request.form:
             record = app.config['record']
             if record:
                 app.config['record'] = False
             else:
                 app.config['record'] = True
-            pass
-        elif "Send Audio" in request.form:
-            app.config['stream_audio'] = True
             pass
     if request.method == 'GET':
         print("No get methods")
