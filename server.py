@@ -78,8 +78,7 @@ def get_video_filenames():
     absFilePath = os.path.dirname(__file__)
     print(absFilePath+"/videos")
     f = []
-    path = "videos"
-    for (dirpath, dirnames, filenames) in walk(path):
+    for (dirpath, dirnames, filenames) in walk(absFilePath):
         print(filenames)
         f.extend(filenames)
         break
