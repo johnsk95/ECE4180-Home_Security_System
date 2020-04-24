@@ -42,6 +42,7 @@ def arm():
 
 @app.route('/update_video', methods=['POST'])
 def update_video():
+    print('update video')
     filename = request.form.get('videos_select')
     total_path = get_video_dir_path()+'/'+filename
     print(total_path)
