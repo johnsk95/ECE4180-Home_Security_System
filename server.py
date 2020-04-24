@@ -13,20 +13,8 @@ cap = cv2.VideoCapture('dolce_faster.mp4')
 app = Flask("app")
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def index():
-    if request.method == 'POST':
-        if "Arm" in request.form:
-            app.config['armed'] = True
-            print("Armed")
-            pass
-        elif "Disarm" in request.form:
-            app.config['armed'] = False
-            print("Disarmed")
-            pass
-        elif "Record" in request.form:
-    if request.method == 'GET':
-        print("No get methods")
     """Video streaming home page."""
     record = "Stop"
     if(app.config['record']):
