@@ -9,6 +9,7 @@ import board
 import busio
 import sys
 
+cv_lock = threading.Lock()
 cap = cv2.VideoCapture('dolce_faster.mp4')
 app = Flask("app")
 
@@ -45,12 +46,14 @@ def gen(camera):
             frame = camera.get_frame()
             frame_ready = True
         else:
-            if(cap.isOpened()):
-                ret, image = cap.read()
-                image = cv2.resize(image, (640,480))
-                _, frame = cv2.imencode('.JPEG', image)
-                frame = frame.tostring()
-                frame_ready = True
+            cv_lock.acquire()
+                if(cap.isOpened()):
+                    ret, image = cap.read()
+                    image = cv2.resize(image, (640,480))
+                    _, frame = cv2.imencode('.JPEG', image)
+                    frame = frame.tostring()
+                    frame_ready = True
+            cv_lock.release()
         if(frame_ready):       
             yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
