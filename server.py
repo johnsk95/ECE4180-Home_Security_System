@@ -35,7 +35,7 @@ def index():
     if request.method == 'GET':
         print("No get methods")
     """Video streaming home page."""
-    return render_template('index.html')
+    return render_template('index.html', record_value="Recording")
 
 def gen(camera):
     """Video streaming generator function."""

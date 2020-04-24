@@ -20,7 +20,10 @@
         </div>
         <div class = "picture-descript">
           <form method="post" action="/">
-            <input type="submit" name="record" value="Record" id="submit_btn" >
+            {% if record_value %}
+            <h1>{{record_value}} says: </h1>
+            {% endif %}
+            <input type="submit" name="record" value="Record" >
             <input type="submit" name="arm" value="Arm">      
           </form>
         </div>
@@ -29,23 +32,4 @@
     <hr>
   </body>
 
-  <script>
-  $(document).ready(function () {
-      $('#submit_btn').click(function (e) {
-          e.preventDefault();
-          $(this).prev().text('Processing ...');
-          $.ajax({
-              cache: false,
-              type: "POST",
-              dataType: "json",
-              data: $('#form1').serialize(),
-              url: "echo/json",
-              complete: function (HttpRequest, textStatus) {
-                  $(this).val('Create');
-              }
-          });
-          return false;
-      });
-  });
-  </script>
 </html>
