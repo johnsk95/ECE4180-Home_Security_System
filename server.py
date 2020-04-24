@@ -10,12 +10,16 @@ import busio
 import sys
 import threading
 import os
-from os import walk
+from flask.ext.socketio import SocketIO, emit
 
 cv_lock = threading.Lock()
 cap = cv2.VideoCapture('dolce_faster.mp4')
 app = Flask("app")
+socketio = SocketIO(app)
 
+
+def display_alarm_active():
+    emit('my response', {'data': 'got it!'})    
 
 @app.route('/', methods=['GET'])
 def index():
