@@ -21,9 +21,8 @@
         <div class = "picture-descript">
           <form method="post" action="/">
             {% if record_value %}
-            <h1>{{record_value}} says: </h1>
+            <input type="submit" name="record" value={{record_value}}>
             {% endif %}
-            <input type="submit" name="record" value="Record" >
             <input type="submit" name="arm" value="Arm">      
           </form>
         </div>
