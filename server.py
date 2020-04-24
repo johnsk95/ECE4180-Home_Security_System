@@ -16,10 +16,7 @@ cv_lock = threading.Lock()
 cap = cv2.VideoCapture('dolce_faster.mp4')
 app = Flask("app")
 socketio = SocketIO(app)
-
-
-def display_alarm_active():
-    emit('my response', {'data': 'got it!'})    
+   
 
 @app.route('/', methods=['GET'])
 def index():
@@ -100,6 +97,10 @@ def video_feed():
 def recorded_video():
     return Response(play_video(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+
+def display_alarm_active():
+    with app.app_context():
+        emit('my response', {'data': 'got it!'}) 
 
 def get_video_dir_path():
     absFilePath = os.path.dirname(__file__)
