@@ -71,6 +71,7 @@ def gen(camera):
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 def play_video():
     if(app.config['play_video'] is not None):
+        print("video not none")
         video = app.config['player_video']
         ret, image = video.read()
         image = cv2.resize(image, (640,480))
@@ -90,9 +91,6 @@ def video_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 @app.route('/recorded_video')
 def recorded_video():
-    """Video streaming route. Put this in the src attribute of an img tag."""
-    config = app.config
-    camera = config['camera']
     return Response(play_video(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
