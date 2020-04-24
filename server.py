@@ -25,20 +25,28 @@ def index():
             print("Disarmed")
             pass
         elif "Record" in request.form:
-            print("Record")
-            record = app.config['record']
-            if record:
-                app.config['record'] = False
-            else:
-                app.config['record'] = True
-            pass
     if request.method == 'GET':
         print("No get methods")
     """Video streaming home page."""
-    record = "Stop Recording"
+    record = "Stop"
     if(app.config['record']):
         record = "Record"
     return render_template('index.html', record_value=record)
+
+
+@app.route('/record', methods=['POST'])
+def record():
+    print("Record")
+    record = app.config['record']
+    record_str = ""
+    if record:
+        app.config['record'] = False
+        record_str = "Record"
+    else:
+        app.config['record'] = True
+        record_str = "Stop"
+    pass
+    return render_template("index.html", record_value=record_str)
 
 def gen(camera):
     """Video streaming generator function."""

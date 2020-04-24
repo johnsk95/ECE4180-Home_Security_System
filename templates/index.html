@@ -19,11 +19,13 @@
         <img src="{{ url_for('video_feed') }}" width="100%" height="100%">
         </div>
         <div class = "picture-descript">
-          <form method="post" action="/">
+          <form method="post" action='/record'>
             {% if record_value %}
             <input type="submit" name="record" value={{record_value}}>
             {% endif %}
-            <input type="submit" name="arm" value="Arm">      
+          </form>
+          <form method="post" action='/arm'>
+            <input type="submit" name="arm" value="Arm">  
           </form>
         </div>
       </div>
