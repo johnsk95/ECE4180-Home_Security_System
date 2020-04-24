@@ -57,10 +57,9 @@
      </div>
 
   </body>
-
-  <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-  <script>
+  <script type="text/javascript">
         // start up the SocketIO connection to the server - the namespace 'test' is also included here if necessary
         var socket = io.connect('http://' + document.domain + ':' + location.port);
         console.log('http://' + document.domain + ':' + location.port)
@@ -68,16 +67,13 @@
         // this is a callback that triggers when the "my response" event is emitted by the server.
         socket.on('alarm status', function(msg) {
             window.alert(msg.data);
-            var dialog = $('<p>Are you sure?</p>').dialog({
-                    buttons: {
-                        "Yes": function() {alert('you chose yes');},
-                        "No":  function() {alert('you chose no');},
-                        "Cancel":  function() {
-                            alert('you chose cancel');
-                            dialog.dialog('close');
-                        }
-                    }
-                });
+            var confirmBox = $("#confirm");
+            confirmBox.find(".message").text(msg);
+            confirmBox.find(".yes").unbind().click(function() {
+               confirmBox.hide();
+            });
+            confirmBox.find(".yes").click(myYes);
+            confirmBox.show();
         });
   </script>    
 
