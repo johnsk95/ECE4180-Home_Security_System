@@ -68,6 +68,16 @@
         // this is a callback that triggers when the "my response" event is emitted by the server.
         socket.on('alarm status', function(msg) {
             window.alert(msg.data);
+            var dialog = $('<p>Are you sure?</p>').dialog({
+                    buttons: {
+                        "Yes": function() {alert('you chose yes');},
+                        "No":  function() {alert('you chose no');},
+                        "Cancel":  function() {
+                            alert('you chose cancel');
+                            dialog.dialog('close');
+                        }
+                    }
+                });
         });
   </script>    
 
