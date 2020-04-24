@@ -66,12 +66,7 @@
         
         // this is a callback that triggers when the "my response" event is emitted by the server.
         socket.on('alarm status', function(msg) {
-            //window.alert(msg.data);
-            if (window.confirm(msg.data)) {
-              console.log("stop alarm")
-            } else {
-              console.log("close alert")
-            }
+            window.alert(msg.data);
             swal("Oops!", "Something went wrong on the page!", "error");
   </script>    
 
