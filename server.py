@@ -9,6 +9,7 @@ import board
 import busio
 import sys
 import threading
+import os
 from os import walk
 
 cv_lock = threading.Lock()
