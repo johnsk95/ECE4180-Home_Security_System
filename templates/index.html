@@ -66,9 +66,8 @@
         console.log('http://' + document.domain + ':' + location.port)
         
         // this is a callback that triggers when the "my response" event is emitted by the server.
-        socket.on('my response', function(msg) {
+        socket.on('alarm status', function(msg) {
             window.alert(msg.data);
-            console.log(data)
         });
   </script>    
 

@@ -99,7 +99,7 @@ def recorded_video():
 
 def display_alarm_active():
     with app.app_context():
-        socketio.emit('my response', {'data': 'got it!'}) 
+        socketio.emit('alarm status', {'data': 'Alarm triggered'}) 
 
 def get_video_dir_path():
     absFilePath = os.path.dirname(__file__)
