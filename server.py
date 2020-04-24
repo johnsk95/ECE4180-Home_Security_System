@@ -81,7 +81,6 @@ def get_video_filenames():
     for filename in os.listdir(video_path):
         print(filename)
         f.append(filename)
-        break
     return f
 def refresh_page():
     with app.app_context():
