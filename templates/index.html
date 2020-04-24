@@ -9,7 +9,6 @@
     <h1>Home Security System</h1>
   </div>
 
-
   <body>
     <div class = "intro-rect">
       {% if record_status %}
@@ -66,13 +65,8 @@
         
         // this is a callback that triggers when the "my response" event is emitted by the server.
         socket.on('alarm status', function(msg) {
-            window.alert(msg.data);
-            var confirmBox = $("#confirm");
-            confirmBox.find(".message").text(msg);
-            confirmBox.find(".yes").unbind().click(function() {
-               confirmBox.hide();
-            });
-            confirmBox.show();
+            //window.alert(msg.data);
+            window.confirm(msg.data);
         });
   </script>    
 
