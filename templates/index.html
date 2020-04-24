@@ -67,7 +67,28 @@
         // this is a callback that triggers when the "my response" event is emitted by the server.
         socket.on('alarm status', function(msg) {
             window.alert(msg.data);
-            swal("Oops!", "Something went wrong on the page!", "error");
+            swal({
+              title: "Are you sure?",
+              text: "You will not be able to recover this imaginary file!",
+              icon: "warning",
+              buttons: [
+                'No, cancel it!',
+                'Yes, I am sure!'
+              ],
+              dangerMode: true,
+            }).then(function(isConfirm) {
+              if (isConfirm) {
+                swal({
+                  title: 'Shortlisted!',
+                  text: 'Candidates are successfully shortlisted!',
+                  icon: 'success'
+                }).then(function() {
+                  form.submit();
+                });
+              } else {
+                swal("Cancelled", "Your imaginary file is safe :)", "error");
+              }
+            });
         });
   </script>    
 
