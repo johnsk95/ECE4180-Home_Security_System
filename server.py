@@ -76,9 +76,9 @@ def recorded_video():
 
 def get_video_filenames():
     absFilePath = os.path.dirname(__file__)
-    print(absFilePath+"/videos")
+    video_path = absFilePath+"/videos"
     f = []
-    for filename in os.listdir(absFilePath):
+    for filename in os.listdir(video_path):
         print(filename)
         f.extend(filename)
         break
