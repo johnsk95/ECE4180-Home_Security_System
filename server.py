@@ -70,18 +70,19 @@ def gen(camera):
             yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 def play_video():
-    frame_ready = False
-    if(app.config['play_video'] is not None):
-        print("video not none")
-        video = app.config['player_video']
-        ret, image = video.read()
-        image = cv2.resize(image, (640,480))
-        _, frame = cv2.imencode('.JPEG', image)
-        frame = frame.tostring()
-        frame_ready = True
-    if(frame_ready):       
-            yield (b'--frame\r\n'
-                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+    while True:
+        frame_ready = False
+        if(app.config['play_video'] is not None):
+            print("video not none")
+            video = app.config['player_video']
+            ret, image = video.read()
+            image = cv2.resize(image, (640,480))
+            _, frame = cv2.imencode('.JPEG', image)
+            frame = frame.tostring()
+            frame_ready = True
+        if(frame_ready):       
+                yield (b'--frame\r\n'
+                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 @app.route('/video_feed')
 def video_feed():
