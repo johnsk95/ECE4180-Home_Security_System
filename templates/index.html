@@ -65,7 +65,7 @@
         // this is a callback that triggers when the "my response" event is emitted by the server.
         socket.on('my response', function(msg) {
             window.alert(msg.data);
-            $('#log').append('<p>Received: ' + msg.data + '</p>');
+            console.log(data)
         });
     });
   </script>

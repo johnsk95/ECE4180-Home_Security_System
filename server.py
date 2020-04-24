@@ -99,8 +99,8 @@ def recorded_video():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def display_alarm_active():
-    with app.test_request_context('/'):
-        emit('my response', {'data': 'got it!'}) 
+    with app.app_context():
+        socketio.emit('my response', {'data': 'got it!'}) 
 
 def get_video_dir_path():
     absFilePath = os.path.dirname(__file__)
