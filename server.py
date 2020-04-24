@@ -71,6 +71,7 @@ def gen(camera):
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 def play_video():
     while True:
+        print("playing video")
         frame_ready = False
         if(app.config['play_video'] is not None):
             print("video not none")
