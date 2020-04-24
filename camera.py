@@ -16,8 +16,6 @@ import copy
 from datetime import datetime
 
 
-
-frame_lock = threading.Lock()
 class Camera(object):
     thread = None  # background thread that reads frames from camera
     write_to_file = False
@@ -39,10 +37,7 @@ class Camera(object):
     def get_frame(self):
         Camera.last_access = time.time()
         self.initialize()
-        frame_lock.acquire()
-        new_frame = copy.deepcopy(self.frame)
-        frame_lock.release()
-        return new_frame
+        return self.frame
     
 
     @classmethod
@@ -87,13 +82,11 @@ class Camera(object):
                 stream.seek(0)
 
                 cls.frame = stream.read()
-                frame_lock.acquire()
                 if(cls.write_to_file and cls.out is not None):
                     arr = np.frombuffer(cls.frame, np.uint8)
                     image = cv2.imdecode(arr, cv2.IMREAD_COLOR)
                     image = cv2.resize(image, (640,480))
                     cls.out.write(image)
-                frame_lock.release()
 
                 # reset stream for next frame
                 stream.seek(0)
