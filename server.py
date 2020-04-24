@@ -8,6 +8,7 @@ import time
 import board
 import busio
 import sys
+import threading
 
 cv_lock = threading.Lock()
 cap = cv2.VideoCapture('dolce_faster.mp4')
