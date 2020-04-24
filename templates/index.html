@@ -37,7 +37,7 @@
       </div>
      </div>
      <div class = "intro-rect">
-      <form class="form-inline" method="POST" action="/update_video">
+      <form class="form-inline" method="POST" action="/selectvideo">
         <select name="videos_select"  onchange="this.form.submit();">
           {% for video in videos %}
           <option value= "{{video}}" SELECTED>{{video}}</option>"

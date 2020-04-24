@@ -40,7 +40,7 @@ def arm():
         app.config['armed'] = True
     return refresh_page()
 
-@app.route('/update_video', methods=['POST'])
+@app.route('/selectvideo', methods=['POST'])
 def update_video():
     print('update video')
     filename = request.form.get('videos_select')
