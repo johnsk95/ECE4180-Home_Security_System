@@ -74,9 +74,12 @@ def recorded_video():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def get_video_filenames():
+    absFilePath = os.path.abspath(__file__)
+    print(absFilePath+"\\videos")
     f = []
     path = "videos"
     for (dirpath, dirnames, filenames) in walk(path):
+        print(filenames)
         f.extend(filenames)
         break
     return f
