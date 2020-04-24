@@ -65,16 +65,22 @@ def video_feed():
 def refresh_page():
     with app.app_context():
         record = ""
+        rec_status = ""
         if(app.config['record']):
             record = "Record"
+            rec_status = "Not Recording"
         else:
             record = "Stop"
+            rec_status = "Recording"
         armed = ""
+        arm_status = ""
         if(app.config['armed']):
             armed = "Disarm"
+            arm_status = "Armed"
         else:
             armed = "Arm"
-        return render_template('index.html', record_value=record, armed_value = armed)
+            arm_status = "Not Armed"
+        return render_template('index.html', record_value=record, armed_value = armed, record_status=rec_status, armed_status= arm_status)
 
 def test_camera():
     try:
