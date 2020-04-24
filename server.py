@@ -100,7 +100,7 @@ def recorded_video():
 
 def display_alarm_active():
     with app.test_request_context('/'):
-        emit('my response', {'data': 'got it!'}, namespace='/test') 
+        emit('my response', {'data': 'got it!'}) 
 
 def get_video_dir_path():
     absFilePath = os.path.dirname(__file__)
