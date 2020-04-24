@@ -9,6 +9,7 @@ import board
 import busio
 import sys
 import threading
+from os import walk
 
 cv_lock = threading.Lock()
 cap = cv2.VideoCapture('dolce_faster.mp4')
@@ -73,7 +74,11 @@ def recorded_video():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def get_video_filenames():
-    return ['Red', 'Blue', 'Black', 'Orange']
+    f = []
+    for (dirpath, dirnames, filenames) in walk(mypath):
+        f.extend(filenames)
+        break
+    return f
 def refresh_page():
     with app.app_context():
         record = ""
