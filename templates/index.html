@@ -25,7 +25,9 @@
             {% endif %}
           </form>
           <form method="post" action='/arm'>
-            <input type="submit" name="arm" value="Arm">  
+            {% if armed_value %}
+            <input type="submit" name="arm" value={{armed_value}}>  
+            {% endif %}
           </form>
         </div>
       </div>

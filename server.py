@@ -15,26 +15,26 @@ app = Flask("app")
 
 @app.route('/', methods=['GET'])
 def index():
-    """Video streaming home page."""
-    record = "Stop"
-    if(app.config['record']):
-        record = "Record"
-    return render_template('index.html', record_value=record)
+    return refresh_page()
 
 
 @app.route('/record', methods=['POST'])
 def record():
-    print("Record")
     record = app.config['record']
-    record_str = ""
     if record:
         app.config['record'] = False
-        record_str = "Record"
     else:
         app.config['record'] = True
-        record_str = "Stop"
-    pass
-    return render_template("index.html", record_value=record_str)
+    return refresh_page()
+
+@app.route('/arm', methods=['POST'])
+def arm():
+    armed = app.config['armed']
+    if armed:
+        app.config['armed'] = False
+    else:
+        app.config['armed'] = True
+    return refresh_page()
 
 def gen(camera):
     """Video streaming generator function."""
@@ -61,7 +61,20 @@ def video_feed():
     camera = config['camera']
     return Response(gen(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
- 
+
+def refresh_page():
+    with app.app_context():
+        record = ""
+        if(app.config['record']):
+            record = "Record"
+        else:
+            record = "Stop"
+        armed = ""
+        if(app.config['armed']):
+            armed = "Disarm"
+        else:
+            armed = "Arm"
+        return render_template('index.html', record_value=record, armed_value = armed)
 
 def test_camera():
     try:
