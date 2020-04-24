@@ -17,7 +17,7 @@ lidar = adafruit_vl53l0x.VL53L0X(i2c)
 lidar.measurement_timing_budget = 200000
 	
 def play_sound():
-	print('playing sound!')
+	#print('playing sound!')
 	for _ in range(3):
 		os.system('mpg321 siren.mp3')
 		time.sleep(0.2)
@@ -32,7 +32,7 @@ def flash_led():
 def activate_alarm():
 	sound_thread = threading.Thread(target=play_sound)
 	led_thread = threading.Thread(target=flash_led)
-	print('alarm activated!')
+	#print('alarm activated!')
 	server.start_recording_camera()
 	sound_thread.start()
 	led_thread.start()
@@ -40,7 +40,7 @@ def activate_alarm():
 	sound_thread.join()
 	time.sleep(10)
 	server.stop_recording_camera()
-	print('alarm end')
+	#print('alarm end')
 
 
 
