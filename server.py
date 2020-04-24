@@ -78,9 +78,9 @@ def get_video_filenames():
     absFilePath = os.path.dirname(__file__)
     print(absFilePath+"/videos")
     f = []
-    for (dirpath, dirnames, filenames) in walk(absFilePath):
-        print(filenames)
-        f.extend(filenames)
+    for filename in os.listdir(absFilePath):
+        print(filename)
+        f.extend(filename)
         break
     return f
 def refresh_page():
