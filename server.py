@@ -48,6 +48,7 @@ def update_video():
     print(total_path)
     video_cap = cv2.VideoCapture(total_path)
     app.config['player_video'] = video_cap
+    return refresh_page()
 
 def gen(camera):
     """Video streaming generator function."""
