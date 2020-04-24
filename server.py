@@ -40,6 +40,14 @@ def arm():
         app.config['armed'] = True
     return refresh_page()
 
+@app.route('/update_video', methods=['POST'])
+def update_video():
+    filename = request.form.get('videos_select')
+    total_path = get_video_dir_path()+'/'+filename
+    print(total_path)
+    video_cap = cv2.VideoCapture(total_path)
+    app.config['player_video'] = video_cap
+
 def gen(camera):
     """Video streaming generator function."""
     while True:
@@ -59,6 +67,18 @@ def gen(camera):
         if(frame_ready):       
             yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+def play_video():
+    if(app.config['play_video'] is not None):
+        video = app.config['player_video']
+        ret, image = video.read()
+        image = cv2.resize(image, (640,480))
+        _, frame = cv2.imencode('.JPEG', image)
+        frame = frame.tostring()
+        frame_ready = True
+    if(frame_ready):       
+            yield (b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
 @app.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
@@ -71,12 +91,15 @@ def recorded_video():
     """Video streaming route. Put this in the src attribute of an img tag."""
     config = app.config
     camera = config['camera']
-    return Response(gen(camera),
+    return Response(play_video(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
-def get_video_filenames():
+def get_video_dir_path():
     absFilePath = os.path.dirname(__file__)
-    video_path = absFilePath+"/videos"
+    return absFilePath+"/videos"
+
+def get_video_filenames():
+    video_path = get_video_dir_path()
     f = list()
     for filename in os.listdir(video_path):
         print(filename)
@@ -126,7 +149,8 @@ def start_server():
         armed = True,
         record = False,
         stream_audio = False,
-        ready = True
+        ready = True,
+        play_video = None
     )
     app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
     
