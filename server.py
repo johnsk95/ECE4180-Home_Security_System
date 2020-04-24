@@ -75,7 +75,6 @@ def play_video():
         frame_ready = False
         if(app.config['play_video'] is not None):
             with cv_lock:
-                print("video not none")
                 video = app.config['play_video']
                 ret, image = video.read()
                 image = cv2.resize(image, (640,480))
