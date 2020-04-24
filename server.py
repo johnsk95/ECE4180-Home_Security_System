@@ -62,7 +62,7 @@ def video_feed():
     return Response(gen(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 @app.route('/recorded_video')
-def video_feed():
+def recorded_video():
     """Video streaming route. Put this in the src attribute of an img tag."""
     config = app.config
     camera = config['camera']
