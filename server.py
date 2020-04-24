@@ -77,10 +77,10 @@ def recorded_video():
 def get_video_filenames():
     absFilePath = os.path.dirname(__file__)
     video_path = absFilePath+"/videos"
-    f = []
+    f = list()
     for filename in os.listdir(video_path):
         print(filename)
-        f.extend(filename)
+        f.append(filename)
         break
     return f
 def refresh_page():
