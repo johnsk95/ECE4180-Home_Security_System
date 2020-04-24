@@ -71,6 +71,9 @@ def recorded_video():
     camera = config['camera']
     return Response(gen(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+
+def get_video_filenames():
+    return ['Red', 'Blue', 'Black', 'Orange']
 def refresh_page():
     with app.app_context():
         record = ""
@@ -89,7 +92,8 @@ def refresh_page():
         else:
             armed = "Arm"
             arm_status = "Not Armed"
-        return render_template('index.html', record_value=record, armed_value = armed, record_status=rec_status, armed_status= arm_status)
+        return render_template('index.html', record_value=record,
+         armed_value = armed, record_status=rec_status, armed_status= arm_status, videos = get_video_filenames())
 
 def test_camera():
     try:

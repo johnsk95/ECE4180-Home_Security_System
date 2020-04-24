@@ -37,11 +37,10 @@
       </div>
      </div>
      <div class = "intro-rect">
-      <select id="cars" name="cars">
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="fiat">Fiat</option>
-        <option value="audi">Audi</option>
+      <select name="videos_select" method="GET" action="/">
+        {% for video in videos %}
+        <option value= "{{video}}" SELECTED>{{video}}</option>"
+        {% endfor %}
       </select>
       <form method="post" action='/control_video'>
         {% if video_status %}
