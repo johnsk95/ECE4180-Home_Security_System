@@ -58,6 +58,7 @@
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script type="text/javascript">
         // start up the SocketIO connection to the server - the namespace 'test' is also included here if necessary
         var socket = io.connect('http://' + document.domain + ':' + location.port);
@@ -66,8 +67,31 @@
         // this is a callback that triggers when the "my response" event is emitted by the server.
         socket.on('alarm status', function(msg) {
             //window.alert(msg.data);
-            window.confirm(msg.data);
-        });
+            if (window.confirm(msg.data)) {
+              console.log("stop alarm")
+            } else {
+              console.log("close alert")
+            }
+
+            swal({   title: "Your account will be deleted permanently!",   
+            text: "Are you sure to proceed?",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "Remove My Account!",   
+            cancelButtonText: "I am not sure!",   
+            closeOnConfirm: false,   
+            closeOnCancel: false }, 
+            function(isConfirm){   
+                if (isConfirm) 
+            {   
+                swal("Account Removed!", "Your account is removed permanently!", "success");   
+                } 
+                else {     
+                    swal("Hurray", "Account is not removed!", "error");   
+                    } });
+
+                });
   </script>    
 
 </html>
