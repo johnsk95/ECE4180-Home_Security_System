@@ -58,10 +58,15 @@
 
   </body>
 
-  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js">
-    $(document).ready(function(){
-        console.log('test log');
+  <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script>
+    $( document ).ready(function() {
+        console.log( "document loaded" );
     });
-  </script>
+
+    $( window ).on( "load", function() {
+        console.log( "window loaded" );
+    });
+  </script>    
 
 </html>
