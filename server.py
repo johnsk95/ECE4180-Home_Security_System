@@ -47,7 +47,7 @@ def update_video():
     total_path = get_video_dir_path()+'/'+filename
     print(total_path)
     video_cap = cv2.VideoCapture(total_path)
-    app.config['player_video'] = video_cap
+    app.config['play_video'] = video_cap
     return refresh_page()
 
 def gen(camera):
@@ -71,7 +71,6 @@ def gen(camera):
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 def play_video():
     while True:
-        print("playing video")
         frame_ready = False
         if(app.config['play_video'] is not None):
             print("video not none")
