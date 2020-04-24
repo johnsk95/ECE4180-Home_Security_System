@@ -75,7 +75,8 @@ def recorded_video():
 
 def get_video_filenames():
     f = []
-    for (dirpath, dirnames, filenames) in walk(mypath):
+    path = "\videos"
+    for (dirpath, dirnames, filenames) in walk(path):
         f.extend(filenames)
         break
     return f
