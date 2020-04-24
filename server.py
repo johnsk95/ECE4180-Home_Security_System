@@ -10,7 +10,7 @@ import busio
 import sys
 import threading
 import os
-from flask.ext.socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit
 
 cv_lock = threading.Lock()
 cap = cv2.VideoCapture('dolce_faster.mp4')
