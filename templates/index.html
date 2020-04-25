@@ -34,13 +34,6 @@
         </div>
       </div>
      </div>  <div class = "intro-rect">
-      <form class="select_form" method="POST" action="/selectvideo">
-        <select name="videos_select"  onchange="this.form.submit();" onfocus="this.selectedIndex = -1;">
-          {% for video in videos %}
-          <option value= "{{video}}" SELECTED>{{video}}</option>"
-          {% endfor %}
-        </select>
-      </form>
       <form method="post" action='/control_video'>
         {% if video_status %}
         <input type="submit" name="video_controller" value={{video_status}}>  
