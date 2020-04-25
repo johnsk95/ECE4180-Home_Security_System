@@ -49,6 +49,7 @@ def update_video():
     print(total_path)
     video_cap = cv2.VideoCapture(total_path)
     app.config['play_video'] = video_cap
+    current_video=total_path
     return refresh_page()
 
 def gen(camera):
@@ -131,7 +132,8 @@ def refresh_page():
             armed = "Arm"
             arm_status = "Not Armed"
         return render_template('index.html', record_value=record,
-         armed_value = armed, record_status=rec_status, armed_status= arm_status, videos = get_video_filenames())
+         armed_value = armed, record_status=rec_status, armed_status= arm_status, 
+         videos = get_video_filenames(), current_video=get_current_video())
 
 def test_camera():
     try:
@@ -202,6 +204,12 @@ def get_streaming_audio():
     with app.app_context():
         config = app.config
         return config['stream_audio']
+
+def get_current_video():
+    with app.app_context():
+        config = app.config
+        return config['current_video']
+
 
 def shutdown_server():
     sys.exit(0)
