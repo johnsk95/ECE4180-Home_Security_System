@@ -3,7 +3,7 @@ html, body {
   padding:0;
   margin:0;
   font-family:verdana;
-  font-size:16px;
+  font-size: 0;
  }
 
 html{
@@ -14,7 +14,7 @@ html{
   background-color: #B5D99C;
   height: 150px;
   margin-top: 0;
-  font-size: 0;
+  font-size: 16px;
 }
 
 
@@ -25,7 +25,7 @@ html{
   background-clip: content-box;
   margin-top: 0;
   width: 100%;
-  font-size: 0;
+  font-size: 16px;
 }
 
 input, textarea, h1, h3, h4, h5, h6, .title{
