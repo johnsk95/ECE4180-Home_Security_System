@@ -14,7 +14,7 @@ from flask_socketio import SocketIO, emit
 
 cv_lock = threading.Lock()
 cap = cv2.VideoCapture('dolce_faster.mp4')
-app = Flask("app")
+app = Flask("app", static_folder='static')
 socketio = SocketIO(app)
    
 
@@ -49,7 +49,7 @@ def update_video():
     print(total_path)
     video_cap = cv2.VideoCapture(total_path)
     app.config['play_video'] = video_cap
-    app.config['current_video']=total_path
+    app.config['current_video']="/videos/"+filename
     return refresh_page()
 
 def gen(camera):
@@ -104,7 +104,7 @@ def display_alarm_active():
 
 def get_video_dir_path():
     absFilePath = os.path.dirname(__file__)
-    return absFilePath+"/videos"
+    return absFilePath+"/static/videos"
 
 def get_video_filenames():
     video_path = get_video_dir_path()
