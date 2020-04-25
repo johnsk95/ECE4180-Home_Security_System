@@ -73,6 +73,7 @@ h2{
   border: 3px solid #B5D99C;
   line-height: 0;
   box-sizing: border-box;
+  padding-bottom: 25px;
 }
 
 .dark-picture{
