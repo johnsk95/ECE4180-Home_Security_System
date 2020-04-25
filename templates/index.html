@@ -16,7 +16,7 @@
       {% if armed_status %}
       <h2>Alarm Status : {{armed_status}}</h2>
       {% endif %}
-      <img src="{{ url_for('video_feed') }}" width="100%" height="100%">
+      <center><img src="{{ url_for('video_feed') }}" width="100%" height="100%"></center>
       <div class = "picture-holder">
           <form method="post" action='/record'>
             {% if record_value %}
