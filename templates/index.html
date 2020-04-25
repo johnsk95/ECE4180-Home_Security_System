@@ -16,23 +16,21 @@
       {% if armed_status %}
       <h2>Alarm Status : {{armed_status}}</h2>
       {% endif %}
+      <img src="{{ url_for('video_feed') }}" width="640" height="480">
       <div class = "picture-holder">
-       <div class = "picture">
-        <img src="{{ url_for('video_feed') }}" width="640" height="480">
-        </div>
-
+          <form method="post" action='/record'>
+            {% if record_value %}
+            <input type="submit" name="record" value={{record_value}}>
+            {% endif %}
+          </form>
+          <form method="post" action='/arm'>
+            {% if armed_value %}
+            <input type="submit" name="arm" value={{armed_value}}>  
+            {% endif %}
+          </form>
       </div>
-      <form method="post" action='/record'>
-        {% if record_value %}
-        <input type="submit" name="record" value={{record_value}}>
-        {% endif %}
-      </form>
-      <form method="post" action='/arm'>
-        {% if armed_value %}
-        <input type="submit" name="arm" value={{armed_value}}>  
-        {% endif %}
-      </form>
-     </div>  <div class = "intro-rect">
+    </div> 
+    <div class = "intro-rect">
       <form class="select_form" method="POST" action="/selectvideo">
         <select name="videos_select"  onchange="this.form.submit();" onfocus="this.selectedIndex = -1;">
           {% for video in videos %}
