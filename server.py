@@ -14,7 +14,7 @@ from flask_socketio import SocketIO, emit
 
 cv_lock = threading.Lock()
 cap = cv2.VideoCapture('dolce_faster.mp4')
-app = Flask("app", static_folder='static')
+app = Flask("app")
 socketio = SocketIO(app)
    
 
