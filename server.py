@@ -68,7 +68,8 @@ def gen(camera):
                     _, frame = cv2.imencode('.JPEG', image)
                     frame = frame.tostring()
                     frame_ready = True
-        if(frame_ready):       
+        if(frame_ready):     
+            print('got frame')  
             yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 def play_video():
