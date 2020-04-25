@@ -55,6 +55,7 @@ def update_video():
 def gen(camera):
     """Video streaming generator function."""
     while True:
+        print("in gen")
         frame = None
         frame_ready = False
         if(camera is not None):
