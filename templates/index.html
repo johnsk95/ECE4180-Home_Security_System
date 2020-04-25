@@ -18,21 +18,20 @@
       {% endif %}
       <div class = "picture-holder">
        <div class = "picture">
-        <img src="{{ url_for('video_feed') }}" width="100%" height="100%">
+        <img src="{{ url_for('video_feed') }}" width="640" height="480">
         </div>
-        <div class = "picture-descript">
-          <form method="post" action='/record'>
-            {% if record_value %}
-            <input type="submit" name="record" value={{record_value}}>
-            {% endif %}
-          </form>
-          <form method="post" action='/arm'>
-            {% if armed_value %}
-            <input type="submit" name="arm" value={{armed_value}}>  
-            {% endif %}
-          </form>
-        </div>
+
       </div>
+      <form method="post" action='/record'>
+        {% if record_value %}
+        <input type="submit" name="record" value={{record_value}}>
+        {% endif %}
+      </form>
+      <form method="post" action='/arm'>
+        {% if armed_value %}
+        <input type="submit" name="arm" value={{armed_value}}>  
+        {% endif %}
+      </form>
      </div>  <div class = "intro-rect">
       <form class="select_form" method="POST" action="/selectvideo">
         <select name="videos_select"  onchange="this.form.submit();" onfocus="this.selectedIndex = -1;">
