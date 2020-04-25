@@ -64,8 +64,9 @@ if __name__ == '__main__':
 	while True:
 		dist = lidar.range
 		if (dist < 400) and (dist != 0) and server.get_armed():
-			activate_alarm()
 			server.display_alarm_active()
+			activate_alarm()
+			
 		# if (server.live_stream and streaming_video):
 		# 	start_camera(cam)
 		# 	print("Live streaming")
