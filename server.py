@@ -49,7 +49,7 @@ def update_video():
     print(total_path)
     video_cap = cv2.VideoCapture(total_path)
     app.config['play_video'] = video_cap
-    current_video=total_path
+    app.config['current_video']=total_path
     return refresh_page()
 
 def gen(camera):
@@ -159,7 +159,8 @@ def start_server():
         record = False,
         stream_audio = False,
         ready = True,
-        play_video = None
+        play_video = None,
+        current_video = None
     )
     app.run(host='0.0.0.0', port =8000, debug=False, threaded=True)
     
