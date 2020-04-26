@@ -61,8 +61,8 @@ def gen(camera):
             frame = camera.get_frame()
             frame_ready = True
         else:
-            print("get cv lock")
             with cv_lock:
+                print("got cv lock")
                 if(cap.isOpened()):
                     ret, image = cap.read()
                     image = cv2.resize(image, (640,480))
@@ -73,20 +73,6 @@ def gen(camera):
             print('got frame')  
             yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-def play_video():
-    while True:
-        frame_ready = False
-        if(app.config['play_video'] is not None):
-            with cv_lock:
-                video = app.config['play_video']
-                ret, image = video.read()
-                image = cv2.resize(image, (640,480))
-                _, frame = cv2.imencode('.JPEG', image)
-                frame = frame.tostring()
-                frame_ready = True
-        if(frame_ready):       
-                yield (b'--frame\r\n'
-                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 @app.route('/video_feed')
 def video_feed():
@@ -94,10 +80,6 @@ def video_feed():
     config = app.config
     camera = config['camera']
     return Response(gen(camera),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
-@app.route('/recorded_video')
-def recorded_video():
-    return Response(play_video(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def display_alarm_active():
