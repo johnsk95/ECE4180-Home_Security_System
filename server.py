@@ -150,7 +150,7 @@ def start_server():
         stream_audio = False,
         ready = True,
         play_video = None,
-        current_video = None
+        current_video = None,
         stop_alarm = False
     )
     app.run(host='192.168.88.213', port=8000, debug=False, threaded=True)
