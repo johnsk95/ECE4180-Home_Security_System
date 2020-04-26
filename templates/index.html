@@ -78,7 +78,8 @@
                   title: 'Alarm halted',
                   icon: 'success'
                 }).then(function() {
-                  form.submit();
+                  socket.emit('alarmoff');
+                  // form.submit();
                 });
               } 
             });

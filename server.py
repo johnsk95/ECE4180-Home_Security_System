@@ -17,11 +17,19 @@ cap = cv2.VideoCapture('dolce_faster.mp4')
 app = Flask("app")
 socketio = SocketIO(app)
    
+@socketio.on('alarmoff')
+def on_off(msg):
+    alarm_off()
 
 @app.route('/', methods=['GET'])
 def index():
     return refresh_page()
 
+def alarm_off():
+    app.config['stop_alarm'] = True
+    time.sleep(2)
+    app.config['stop_alarm'] = False
+    return refresh_page()
 
 @app.route('/record', methods=['POST'])
 def record():
@@ -143,6 +151,7 @@ def start_server():
         ready = True,
         play_video = None,
         current_video = None
+        stop_alarm = False
     )
     app.run(host='192.168.88.213', port=8000, debug=False, threaded=True)
     
@@ -192,6 +201,11 @@ def get_current_video():
     with app.app_context():
         config = app.config
         return config['current_video']
+
+def get_stop_alarm():
+    with app.app_context():
+        config = app.config
+        return config['stop_alarm']
 
 
 def shutdown_server():
