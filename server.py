@@ -49,7 +49,7 @@ def update_video():
     print(total_path)
     video_cap = cv2.VideoCapture(total_path)
     app.config['play_video'] = video_cap
-    app.config['current_video']="./static/videos/"+filename
+    app.config['current_video']="./recordings"+filename
     return refresh_page()
 
 def gen(camera):
@@ -86,7 +86,7 @@ def display_alarm_active():
 
 def get_video_dir_path():
     absFilePath = os.path.dirname(__file__)
-    return absFilePath+"/static/videos"
+    return absFilePath+"/recordings"
 
 def get_video_filenames():
     video_path = get_video_dir_path()
@@ -144,7 +144,7 @@ def start_server():
         play_video = None,
         current_video = None
     )
-    app.run(host='192.168.88.213', port =8000, debug=False, threaded=True)
+    app.run(host='192.168.88.213', port=8000, debug=False, threaded=True)
     
 def start_camera(camera):
     camera.initialize()

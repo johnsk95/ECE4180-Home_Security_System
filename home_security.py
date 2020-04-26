@@ -32,7 +32,6 @@ def flash_led():
 def activate_alarm():
 	sound_thread = threading.Thread(target=play_sound)
 	led_thread = threading.Thread(target=flash_led)
-	#print('alarm activated!')
 	server.start_recording_camera()
 	sound_thread.start()
 	led_thread.start()
@@ -40,8 +39,6 @@ def activate_alarm():
 	sound_thread.join()
 	time.sleep(10)
 	server.stop_recording_camera()
-	#print('alarm end')
-
 
 
 def handler(signal_received, frame):
@@ -59,18 +56,10 @@ if __name__ == '__main__':
 	while not server.get_ready():
 		print("not ready")
 		time.sleep(0.2)
-
 	print('system on! Press CTRL-C to exit')
 	while True:
 		dist = lidar.range
 		if (dist < 400) and (dist != 0) and server.get_armed():
 			server.display_alarm_active()
 			activate_alarm()
-			
-		# if (server.live_stream and streaming_video):
-		# 	start_camera(cam)
-		# 	print("Live streaming")
-		# 	#Add code here to start camera
-		# if (server.play_audio):
-		# 	print("streaming audio")
 		time.sleep(0.2)
