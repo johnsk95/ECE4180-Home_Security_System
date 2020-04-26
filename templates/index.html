@@ -44,10 +44,12 @@
         {% endif %}
       </form>
       <div class = "picture-holder">
+        {% if current_video %}
         <video width="640" height="480" controls>
-          <source src="./static/videos/herman.mp4" type="video/mp4" width="640" height="480" >
+          <source src="{{current_video}}" type="video/mp4" width="640" height="480" >
           Your browser does not support the video tag.
         </video>
+        {% endif %}
       </div>
      </div>
 
