@@ -55,13 +55,13 @@ def update_video():
 def gen(camera):
     """Video streaming generator function."""
     while True:
-        print("in gen")
         frame = None
         frame_ready = False
         if(camera is not None):
             frame = camera.get_frame()
             frame_ready = True
         else:
+            print("get cv lock")
             with cv_lock:
                 if(cap.isOpened()):
                     ret, image = cap.read()
