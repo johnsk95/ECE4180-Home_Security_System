@@ -63,14 +63,12 @@ def gen(camera):
         else:
             with cv_lock:
                 if(cap.isOpened()):
-                    print("got cap open")
                     ret, image = cap.read()
                     image = cv2.resize(image, (640,480))
                     _, frame = cv2.imencode('.JPEG', image)
                     frame = frame.tostring()
                     frame_ready = True
-        if(frame_ready):     
-            print('got frame')  
+        if(frame_ready):      
             yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
