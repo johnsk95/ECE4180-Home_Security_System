@@ -40,14 +40,17 @@ def record():
         app.config['record'] = True
     return refresh_page()
 
-@app.route('/arm', methods=['POST'])
+@app.route('/arm')
 def arm():
     armed = app.config['armed']
+    status = ""
     if armed:
+        status = "Arm"
         app.config['armed'] = False
     else:
+        status = "Disarm"
         app.config['armed'] = True
-    return refresh_page()
+    return jsonify(result=armed)
 
 @app.route('/selectvideo', methods=['POST'])
 def update_video():
@@ -103,6 +106,8 @@ def get_video_filenames():
         print(filename)
         f.append(filename)
     return f
+
+
 def refresh_page():
     with app.app_context():
         record = ""

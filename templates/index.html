@@ -23,9 +23,9 @@
             <input type="submit" name="record" value={{record_value}}>
             {% endif %}
           </form>
-          <form method="post" action='/arm'>
+          <form>
             {% if armed_value %}
-            <input type="submit" name="arm" value={{armed_value}}>  
+            <input name="arm" value={{armed_value}}>  
             {% endif %}
           </form>
       </div>
@@ -83,6 +83,17 @@
               } 
             });
         });
+
+      $(function() {
+			  $('a#process_input').bind('click', function() {
+				$.getJSON('/arm', {
+				  proglang: $('input[name="arm"]').val(),
+				}, function(data) {
+				  $("#result").text(data.result);
+				});
+				return false;
+			  });
+			});
   </script>    
 
 </html>
