@@ -22,7 +22,6 @@ def play_sound():
 		os.system('mpg321 siren.mp3')
 		time.sleep(0.2)
 		if server.get_stop_alarm():
-			print("stop sound")
 			break
 
 def flash_led():
@@ -32,7 +31,6 @@ def flash_led():
 		led.value = False
 		time.sleep(0.5)
 		if server.get_stop_alarm():
-			print("stopped led")
 			break
 		
 def activate_alarm():
@@ -65,7 +63,6 @@ if __name__ == '__main__':
 	print('system on! Press CTRL-C to exit')
 	while True:
 		dist = lidar.range
-		print(dist)
 		if (dist < 400) and (dist != 0) and server.get_armed():
 			server.display_alarm_active()
 			activate_alarm()
