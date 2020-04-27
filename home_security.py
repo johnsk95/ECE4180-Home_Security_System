@@ -45,6 +45,7 @@ def activate_alarm():
 	sound_thread.join()
 	time.sleep(10)
 	server.stop_recording_camera()
+	print('alarm not active')
 
 
 def handler(signal_received, frame):
