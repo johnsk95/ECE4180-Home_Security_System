@@ -32,7 +32,7 @@
     </div> 
     <div class = "intro-rect">
       <form>
-        <select name="videos_select" id = "videos_dropdown" onfocus="this.selectedIndex = -1;">
+        <select name="videos_select" id ="videos_dropdown" onfocus="this.selectedIndex = -1;">
           {% for video in videos %}
           <option value= "{{video}}" SELECTED>{{video}}</option>"
           {% endfor %}
@@ -100,10 +100,10 @@
           });
 
           $("#videos_dropdown").change(function(){
-            $.getJSON("/selectvideo", function(data) {
-              filepath = data.filepath
-              $("#video_player").html('<source src='+filepath+' type="video/mp4"></source>' );
-            });
+            var filename = $("#videos_dropdown").options[$("#videos_dropdown").selectedIndex].text;
+            console.log(filename);
+            var filepath = './static/videos/'+filename;
+            $("#video_player").html('<source src='+filepath+' type="video/mp4"></source>' );
           });
 
         function update_record(){
