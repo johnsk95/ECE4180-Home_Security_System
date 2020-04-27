@@ -28,7 +28,7 @@ def index():
 @app.route('/receive_message', methods=['POST'])
 def receive_message():
     message = request.form.get('message')
-    print(message)
+    app.config['message'] = message
     return '', 204
 
 def alarm_off():
@@ -172,9 +172,9 @@ def start_server():
         camera = cam,
         armed = True,
         record = False,
-        stream_audio = False,
         ready = True,
-        stop_alarm = False
+        stop_alarm = False,
+        message = ""
     )
     app.run(host='0.0.0.0', port=8000, debug=False, threaded=True)
     
@@ -221,10 +221,10 @@ def get_record():
         config = app.config
         return config['record']
 
-def get_streaming_audio():
+def get_message():
     with app.app_context():
         config = app.config
-        return config['stream_audio']
+        return config['message']
 
 
 def get_stop_alarm():
