@@ -77,17 +77,6 @@ def arm():
         app.config['armed'] = True
     return jsonify(value=value, status=status)
 
-@app.route('/selectvideo')
-def update_video():
-    print('update video')
-    filename = request.form.get('videos_select')
-    total_path = get_video_dir_path()+'/'+filename
-    print(total_path)
-    video_cap = cv2.VideoCapture(total_path)
-    app.config['play_video'] = video_cap
-    app.config['current_video']="./static/videos/"+filename
-    return jsonify(filepath = "./static/videos/"+filename)
-
 def gen(camera):
     """Video streaming generator function."""
     while True:
@@ -153,7 +142,7 @@ def refresh_page():
             arm_status = "Not Armed"
         return render_template('index.html', record_value=record,
          armed_value = armed, record_status=rec_status, armed_status= arm_status, 
-         videos = get_video_filenames(), current_video=get_current_video())
+         videos = get_video_filenames())
 
 def test_camera():
     try:
@@ -179,8 +168,6 @@ def start_server():
         record = False,
         stream_audio = False,
         ready = True,
-        play_video = None,
-        current_video = None,
         stop_alarm = False
     )
     app.run(host='0.0.0.0', port=8000, debug=False, threaded=True)
@@ -233,10 +220,6 @@ def get_streaming_audio():
         config = app.config
         return config['stream_audio']
 
-def get_current_video():
-    with app.app_context():
-        config = app.config
-        return config['current_video']
 
 def get_stop_alarm():
     with app.app_context():
