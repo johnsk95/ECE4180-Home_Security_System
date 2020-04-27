@@ -83,12 +83,15 @@
               } 
             });
         });
-        function switch_armed() {
-          $.getJSON('/arm', function(data) {
-            $("#arm_button").html(data.result);
+
+        $('#arm_button').click(function(e){
+            e.preventDefault();
+            $.getJSON('/arm', function(data) {
+              $("#arm_button").html(data.result);
+              });
+              return false;
           });
-          return false;
-        }
+
         
   </script>    
 
