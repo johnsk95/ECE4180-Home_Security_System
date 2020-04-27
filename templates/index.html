@@ -84,9 +84,9 @@
             });
         });
 
-        // socket.on('record', function(msg) {
-        //     display_record();
-        // });
+        socket.on('record', function(msg) {
+            display_record();
+        });
 
         $('#arm_button').click(function(e){
             e.preventDefault();
