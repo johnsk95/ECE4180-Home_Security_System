@@ -84,9 +84,9 @@
             });
         });
 
-        socket.on('record', function(msg) {
-            display_record();
-        });
+        // socket.on('record', function(msg) {
+        //     display_record();
+        // });
 
         $('#arm_button').click(function(e){
             e.preventDefault();
@@ -102,7 +102,7 @@
             update_record()
             return false;
           });
-          
+
         function update_record(){
           $.getJSON('/update_display_record', function(data) {
               $("#record_button").html(data.value);
