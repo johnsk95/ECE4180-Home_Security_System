@@ -47,7 +47,14 @@
         <video id="video_player" width="640" height="480" controls>
         </video>
       </div>
-     </div>
+    </div>
+    <body><div class = "intro-rect">
+      <form>
+        <label for="message">Message :</label>
+        <input type="text" id="message_input" name="message"><br><br>
+        <button id="send_button">Send</button>
+      </form>
+    </div> 
 
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -108,6 +115,14 @@
             var video = document.getElementById("video_player");
             video.load();
           });
+
+        $('#send_button').click(function(e){
+          e.preventDefault();
+          var message = document.getElementById("message_input").value
+          $.post( "/receive_message", { message: message } );
+          return false;
+        });
+
 
         function update_record(){
           $.getJSON('/update_display_record', function(data) {

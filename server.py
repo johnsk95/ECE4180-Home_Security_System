@@ -25,6 +25,12 @@ def on_off(msg):
 def index():
     return refresh_page()
 
+@app.route('/receive_message', methods=['POST'])
+def receive_message():
+    message = request.form.get('message')
+    print(message)
+    return '', 204
+
 def alarm_off():
     app.config['stop_alarm'] = True
     time.sleep(2)
