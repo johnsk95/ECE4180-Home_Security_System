@@ -22,6 +22,7 @@ def play_sound(stop):
 		os.system('mpg321 siren.mp3')
 		time.sleep(0.2)
 		if stop():
+			print("stop sound")
 			break
 
 def flash_led(stop):
@@ -30,7 +31,7 @@ def flash_led(stop):
 		time.sleep(0.5)
 		led.value = False
 		time.sleep(0.5)
-		if stop():
+		if server.get_stop_alarm():
 			print("stopped led")
 			break
 		
