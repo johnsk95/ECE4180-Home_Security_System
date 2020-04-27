@@ -86,9 +86,8 @@
 
       $(function() {
 			  $('a#arm_button').bind('click', function() {
-				$.getJSON('/arm', {
-				  proglang: $('input[name="arm"]').val(),
-				}, function(data) {
+				$.getJSON('/arm', 
+        function(data) {
           $("#arm_button").html(data.result);
 				});
 				return false;
