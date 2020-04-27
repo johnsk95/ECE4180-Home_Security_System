@@ -105,7 +105,8 @@
             console.log(filename);
             var filepath = './static/videos/'+filename;
             $("#video_player").html('<source src='+filepath+' type="video/mp4"></source>' );
-            $("#video_player").load();
+            var video = document.getElementById("video_player");
+            video.load();
           });
 
         function update_record(){
