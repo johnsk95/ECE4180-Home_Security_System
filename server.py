@@ -33,12 +33,18 @@ def alarm_off():
 
 @app.route('/record', methods=['POST'])
 def record():
+    value = ""
+    status = ""
     record = app.config['record']
     if record:
+        value = "Record"
+        status = "Not Recording"
         app.config['record'] = False
     else:
+        value = "Stop"
+        status = "Recording"
         app.config['record'] = True
-    return refresh_page()
+    return jsonify(value=value, status=status)
 
 @app.route('/arm')
 def arm():

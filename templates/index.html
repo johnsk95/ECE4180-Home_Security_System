@@ -11,24 +11,24 @@
 
   <body><div class = "intro-rect">
       {% if record_status %}
-      <h2>Camera Status : {{record_status}}</h2>
+      <h2 id="record_status">Camera Status : {{record_status}}</h2>
       {% endif %}
       {% if armed_status %}
       <h2 id="arm_status">Alarm Status : {{armed_status}}</h2>
       {% endif %}
-      <img src="{{ url_for('video_feed') }}" width="640" height="480">
       <div class = "picture-holder">
-          <form method="post" action='/record'>
-            {% if record_value %}
-            <input type="submit" name="record" value={{record_value}}>
-            {% endif %}
-          </form>
-          <form>
-            {% if armed_value %}
-            <button id="arm_button">{{armed_value}}</button>
-            {% endif %}
-          </form>
+        <form method="post" action='/record'>
+          {% if record_value %}
+          <button id="record_button">{{armed_value}}</button>
+          {% endif %}
+        </form>
+        <form>
+          {% if armed_value %}
+          <button id="arm_button">{{armed_value}}</button>
+          {% endif %}
+        </form>
       </div>
+      <img src="{{ url_for('video_feed') }}" width="640" height="480">
     </div> 
     <div class = "intro-rect">
       <form class="select_form" method="POST" action="/selectvideo">
@@ -89,6 +89,15 @@
             $.getJSON('/arm', function(data) {
               $("#arm_button").html(data.value);
               $("#arm_status").html(data.status);
+            });
+            return false;
+          });
+
+        $('#record_button').click(function(e){
+            e.preventDefault();
+            $.getJSON('/record', function(data) {
+              $("#record_button").html(data.value);
+              $("#record_status").html(data.status);
             });
             return false;
           });
