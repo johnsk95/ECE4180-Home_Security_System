@@ -138,11 +138,11 @@ def refresh_page():
         record = ""
         rec_status = ""
         if(app.config['record']):
-            record = "Record"
-            rec_status = "Not Recording"
-        else:
             record = "Stop"
             rec_status = "Recording"
+        else:
+            record = "Record"
+            rec_status = "Not Recording"
         armed = ""
         arm_status = ""
         if(app.config['armed']):
