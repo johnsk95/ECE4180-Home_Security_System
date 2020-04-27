@@ -38,11 +38,13 @@ def update_record():
     status = ""
     record = app.config['record']
     if record:
+        print('stop record')
         value = "Record"
         status = "Camera Status: Not Recording"
         app.config['record'] = False
         #start_recording_camera()
     else:
+        print('start record')
         value = "Stop"
         status = "Camera Status: Recording"
         app.config['record'] = True
@@ -194,9 +196,9 @@ def start_recording_camera():
     with app.app_context():
         config = app.config
         camera = config['camera']
-        with app.app_context():
-            socketio.emit('record', 1) 
-            app.config['record'] = True
+        # with app.app_context():
+        #     socketio.emit('record', 1) 
+        #     app.config['record'] = True
         if(camera is not None):
             start_camera(camera)
 
@@ -204,9 +206,9 @@ def stop_recording_camera():
     with app.app_context():
         config = app.config
         camera = config['camera']
-        with app.app_context():
-            socketio.emit('record', 0) 
-            app.config['record'] = False
+        # with app.app_context():
+        #     socketio.emit('record', 0) 
+        #     app.config['record'] = False
         if(camera is not None):
             camera.stop_record()
 
