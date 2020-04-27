@@ -38,12 +38,14 @@ def record():
     record = app.config['record']
     if record:
         value = "Record"
-        status = "Not Recording"
+        status = "Camera Status: Not Recording"
         app.config['record'] = False
+        start_recording_camera()
     else:
         value = "Stop"
-        status = "Recording"
+        status = "Camera Status: Recording"
         app.config['record'] = True
+        stop_recording_camera()
     return jsonify(value=value, status=status)
 
 @app.route('/arm')
