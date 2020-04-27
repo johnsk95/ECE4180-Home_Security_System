@@ -31,7 +31,7 @@ html{
   text-align: center;
 }
 
-input, textarea, h1, h3, h4, h5, h6, .title{
+button, input, textarea, h1, h3, h4, h5, h6, .title{
   color: #0f0326;
  line-height: 30px;
 
