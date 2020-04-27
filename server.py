@@ -33,18 +33,15 @@ def alarm_off():
 
 @app.route('/update_display_record')
 def update_record():
-    print("record over web")
     value = ""
     status = ""
     record = not app.config['record']
     app.config['record'] = record
     if record:
-        print('recording started')
         value = "Stop"
         status = "Camera Status: Recording"
         start_recording_camera()
     else:
-        print('recording stopped')
         value = "Record"
         status = "Camera Status: Not Recording"
         stop_recording_camera() 

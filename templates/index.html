@@ -111,6 +111,7 @@
         }
 
         function display_record(){
+          console.log('update record display')
           $.getJSON('/display_record', function(data) {
               $("#record_button").html(data.value);
               $("#record_status").html(data.status);
