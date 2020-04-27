@@ -41,26 +41,26 @@ def update_record():
         value = "Record"
         status = "Camera Status: Not Recording"
         app.config['record'] = False
-        start_recording_camera()
+        #start_recording_camera()
     else:
         value = "Stop"
         status = "Camera Status: Recording"
         app.config['record'] = True
-        stop_recording_camera()
+        #stop_recording_camera()
     return jsonify(value=value, status=status)
 
-@app.route('/display_record')
-def display_record():
-    value = ""
-    status = ""
-    record = app.config['record']
-    if record:
-        value = "Record"
-        status = "Camera Status: Not Recording"
-    else:
-        value = "Stop"
-        status = "Camera Status: Recording"
-    return jsonify(value=value, status=status)
+# @app.route('/display_record')
+# def display_record():
+#     value = ""
+#     status = ""
+#     record = app.config['record']
+#     if record:
+#         value = "Record"
+#         status = "Camera Status: Not Recording"
+#     else:
+#         value = "Stop"
+#         status = "Camera Status: Recording"
+#     return jsonify(value=value, status=status)
 
 @app.route('/arm')
 def arm():
