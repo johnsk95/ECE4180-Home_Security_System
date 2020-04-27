@@ -31,6 +31,7 @@ def flash_led(stop):
 		led.value = False
 		time.sleep(0.5)
 		if stop():
+			print("stopped led")
 			break
 		
 def activate_alarm():
@@ -63,6 +64,7 @@ if __name__ == '__main__':
 	print('system on! Press CTRL-C to exit')
 	while True:
 		dist = lidar.range
+		print(dist)
 		if (dist < 400) and (dist != 0) and server.get_armed():
 			server.display_alarm_active()
 			activate_alarm()

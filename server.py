@@ -19,6 +19,7 @@ socketio = SocketIO(app)
    
 @socketio.on('alarmoff')
 def on_off(msg):
+    print('alarm off')
     alarm_off()
 
 @app.route('/', methods=['GET'])
