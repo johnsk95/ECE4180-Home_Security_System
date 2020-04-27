@@ -44,13 +44,16 @@ def record():
 def arm():
     armed = app.config['armed']
     status = ""
+    value = ""
     if armed:
-        status = "Arm"
+        value = "Arm"
+        status = "Alarm Status: Disarmed"
         app.config['armed'] = False
     else:
-        status = "Disarm"
+        value = "Disarm"
+        status = "Alarm Status: Armed"
         app.config['armed'] = True
-    return jsonify(result=armed)
+    return jsonify(value=value, status=status)
 
 @app.route('/selectvideo', methods=['POST'])
 def update_video():

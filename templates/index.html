@@ -14,7 +14,7 @@
       <h2>Camera Status : {{record_status}}</h2>
       {% endif %}
       {% if armed_status %}
-      <h2>Alarm Status : {{armed_status}}</h2>
+      <h2 id="arm_status">Alarm Status : {{armed_status}}</h2>
       {% endif %}
       <img src="{{ url_for('video_feed') }}" width="640" height="480">
       <div class = "picture-holder">
@@ -87,9 +87,10 @@
         $('#arm_button').click(function(e){
             e.preventDefault();
             $.getJSON('/arm', function(data) {
-              $("#arm_button").html(data.result);
-              });
-              return false;
+              $("#arm_button").html(data.value);
+              $("#arm_status").html(data.status);
+            });
+            return false;
           });
 
         
