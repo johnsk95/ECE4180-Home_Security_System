@@ -97,7 +97,7 @@ def display_alarm_active():
 
 def get_video_dir_path():
     absFilePath = os.path.dirname(__file__)
-    return absFilePath+"/recordings"
+    return absFilePath+"/static/videos"
 
 def get_video_filenames():
     video_path = get_video_dir_path()
