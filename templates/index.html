@@ -25,7 +25,7 @@
           </form>
           <form>
             {% if armed_value %}
-            <input type="submit" name="arm" value={{armed_value}}>  
+            <a href=# id=arm_button><button class='btn btn-default'>{{armed_value}}</button></a>
             {% endif %}
           </form>
       </div>
@@ -85,11 +85,11 @@
         });
 
       $(function() {
-			  $('a#process_input').bind('click', function() {
+			  $('a#arm_button').bind('click', function() {
 				$.getJSON('/arm', {
 				  proglang: $('input[name="arm"]').val(),
 				}, function(data) {
-				  $("#result").text(data.result);
+          $("#arm_button").html(data.result);
 				});
 				return false;
 			  });

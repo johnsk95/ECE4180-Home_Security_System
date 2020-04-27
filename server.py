@@ -1,4 +1,4 @@
-from flask import current_app, Flask, render_template, Response, request, session
+from flask import current_app, Flask, render_template, Response, request, session, jsonify
 from flask_session import Session
 # Raspberry Pi camera module (requires picamera package, developed by Miguel Grinberg)
 from camera import Camera
