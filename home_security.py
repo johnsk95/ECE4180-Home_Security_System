@@ -16,16 +16,16 @@ i2c = busio.I2C(board.SCL, board.SDA)
 lidar = adafruit_vl53l0x.VL53L0X(i2c)
 lidar.measurement_timing_budget = 200000
 	
-def play_sound(stop):
+def play_sound():
 	#print('playing sound!')
 	for _ in range(3):
 		os.system('mpg321 siren.mp3')
 		time.sleep(0.2)
-		if stop():
+		if server.get_stop_alarm():
 			print("stop sound")
 			break
 
-def flash_led(stop):
+def flash_led():
 	for _ in range(10):
 		led.value = True
 		time.sleep(0.5)
@@ -36,8 +36,8 @@ def flash_led(stop):
 			break
 		
 def activate_alarm():
-	sound_thread = threading.Thread(target=play_sound, args=(lambda : server.get_stop_alarm, ))
-	led_thread = threading.Thread(target=flash_led, args=(lambda : server.get_stop_alarm, ))
+	sound_thread = threading.Thread(target=play_sound)
+	led_thread = threading.Thread(target=flash_led)
 	server.start_recording_camera()
 	sound_thread.start()
 	led_thread.start()
