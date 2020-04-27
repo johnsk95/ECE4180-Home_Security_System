@@ -31,8 +31,8 @@
       <img src="{{ url_for('video_feed') }}" width="640" height="480">
     </div> 
     <div class = "intro-rect">
-      <form class="select_form" method="POST" action="/selectvideo">
-        <select name="videos_select"  onchange="this.form.submit();" onfocus="this.selectedIndex = -1;">
+      <form>
+        <select name="videos_select" id = "videos_dropdown" onfocus="this.selectedIndex = -1;">
           {% for video in videos %}
           <option value= "{{video}}" SELECTED>{{video}}</option>"
           {% endfor %}
@@ -44,12 +44,8 @@
         {% endif %}
       </form>
       <div class = "picture-holder">
-        {% if current_video %}
-        <video width="640" height="480" controls>
-          <source src="{{current_video}}" type="video/mp4" width="640" height="480" >
-          Your browser does not support the video tag.
+        <video id="video_player" width="640" height="480" controls>
         </video>
-        {% endif %}
       </div>
      </div>
 
@@ -101,6 +97,13 @@
             e.preventDefault();
             update_record()
             return false;
+          });
+
+          $("#videos_dropdown").change(function(){
+            $.getJSON("/selectvideo", function(data) {
+              filepath = data.filepath
+              $("#video_player").html('<source src='+filepath+' type="video/mp4"></source>' );
+            });
           });
 
         function update_record(){

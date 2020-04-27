@@ -77,7 +77,7 @@ def arm():
         app.config['armed'] = True
     return jsonify(value=value, status=status)
 
-@app.route('/selectvideo', methods=['POST'])
+@app.route('/selectvideo')
 def update_video():
     print('update video')
     filename = request.form.get('videos_select')
@@ -86,7 +86,7 @@ def update_video():
     video_cap = cv2.VideoCapture(total_path)
     app.config['play_video'] = video_cap
     app.config['current_video']="./static/videos/"+filename
-    return refresh_page()
+    return jsonify(filepath, "./static/videos/"+filename)
 
 def gen(camera):
     """Video streaming generator function."""
