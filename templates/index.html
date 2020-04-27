@@ -100,7 +100,8 @@
           });
 
           $("#videos_dropdown").change(function(){
-            var filename = $("#videos_dropdown").options[$("#videos_dropdown").selectedIndex].text;
+            var dropdown = document.getElementById("videos_dropdown");
+            var filename = dropdown.options[dropdown.selectedIndex].text;
             console.log(filename);
             var filepath = './static/videos/'+filename;
             $("#video_player").html('<source src='+filepath+' type="video/mp4"></source>' );
