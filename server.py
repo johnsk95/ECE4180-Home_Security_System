@@ -31,8 +31,8 @@ def alarm_off():
     app.config['stop_alarm'] = False
     return refresh_page()
 
-@app.route('/record')
-def record():
+@app.route('/update_display_record')
+def update_record():
     value = ""
     status = ""
     record = app.config['record']
@@ -46,6 +46,19 @@ def record():
         status = "Camera Status: Recording"
         app.config['record'] = True
         stop_recording_camera()
+    return jsonify(value=value, status=status)
+
+@app.route('/display_record')
+def display_record():
+    value = ""
+    status = ""
+    record = app.config['record']
+    if record:
+        value = "Record"
+        status = "Camera Status: Not Recording"
+    else:
+        value = "Stop"
+        status = "Camera Status: Recording"
     return jsonify(value=value, status=status)
 
 @app.route('/arm')
@@ -180,6 +193,9 @@ def start_recording_camera():
     with app.app_context():
         config = app.config
         camera = config['camera']
+        with app.app_context():
+            socketio.emit('record', 1) 
+            app.config['record'] = True
         if(camera is not None):
             start_camera(camera)
 
@@ -187,6 +203,9 @@ def stop_recording_camera():
     with app.app_context():
         config = app.config
         camera = config['camera']
+        with app.app_context():
+            socketio.emit('record', 0) 
+            app.config['record'] = False
         if(camera is not None):
             camera.stop_record()
 
