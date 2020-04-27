@@ -26,7 +26,7 @@
           <form>
             {% if armed_value %}
             {{armed_value}}
-            <a href=# id=arm_button><button class='btn btn-default'>{{armed_value}}</button></a>
+            <button onclick="switch_armed()">{{armed_value}}</button>
             {% endif %}
           </form>
       </div>
@@ -84,16 +84,12 @@
               } 
             });
         });
-
-      $(function() {
-			  $('a#arm_button').bind('click', function() {
-				$.getJSON('/arm', 
-        function(data) {
-          $("#arm_button").html(data.result);
-				});
-				return false;
-			  });
-			});
+        function switch_armed() {
+          $.getJSON('/arm', function(data) {
+            $("#arm_button").html(data.result);
+          });
+        }
+        
   </script>    
 
 </html>
