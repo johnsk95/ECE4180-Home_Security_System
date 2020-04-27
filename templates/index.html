@@ -85,6 +85,7 @@
         });
         function switch_armed() {
           $.getJSON('/arm', function(data) {
+            data.preventDefault();
             $("#arm_button").html(data.result);
           });
         }
