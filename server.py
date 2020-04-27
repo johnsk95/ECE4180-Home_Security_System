@@ -31,7 +31,7 @@ def alarm_off():
     app.config['stop_alarm'] = False
     return refresh_page()
 
-@app.route('/record', methods=['POST'])
+@app.route('/record')
 def record():
     value = ""
     status = ""
