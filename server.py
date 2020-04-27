@@ -33,6 +33,7 @@ def alarm_off():
 
 @app.route('/update_display_record')
 def update_record():
+    print("record over web")
     value = ""
     status = ""
     record = app.config['record']
