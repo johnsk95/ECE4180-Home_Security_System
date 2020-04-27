@@ -74,7 +74,7 @@
               dangerMode: true,
             }).then(function(isConfirm) {
               if (isConfirm) {
-                socket.emit('alarmoff');
+                socket.emit('alarmoff', 1);
                 console.log("turn off alarm")
                 swal({
                   title: 'Alarm halted',
