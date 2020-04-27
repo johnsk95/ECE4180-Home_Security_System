@@ -60,7 +60,7 @@ def update_video():
     print(total_path)
     video_cap = cv2.VideoCapture(total_path)
     app.config['play_video'] = video_cap
-    app.config['current_video']="./static/videos"+filename
+    app.config['current_video']="./static/videos/"+filename
     return refresh_page()
 
 def gen(camera):
