@@ -34,6 +34,8 @@ def flash_led():
 			break
 		
 def activate_alarm():
+	print("alarm activated")
+	server.display_alarm_active()
 	sound_thread = threading.Thread(target=play_sound)
 	led_thread = threading.Thread(target=flash_led)
 	server.start_recording_camera()
@@ -64,6 +66,5 @@ if __name__ == '__main__':
 	while True:
 		dist = lidar.range
 		if (dist < 400) and (dist != 0) and server.get_armed():
-			server.display_alarm_active()
 			activate_alarm()
 		time.sleep(0.2)
