@@ -11,6 +11,7 @@ import sys
 import threading
 import os
 from flask_socketio import SocketIO, emit
+import numpy as np
 
 cv_lock = threading.Lock()
 cap = cv2.VideoCapture('dolce_faster.mp4')
