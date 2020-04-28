@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import os, sys
 import time
 import board
@@ -5,6 +7,7 @@ import busio
 import digitalio
 import adafruit_vl53l0x
 import server 
+import serial
 from camera import Camera
 from signal import signal, SIGINT
 import threading
@@ -59,7 +62,8 @@ if __name__ == '__main__':
 	signal(SIGINT, handler)
 	server_thread = threading.Thread(target= server.start_server)
 	server_thread.start()
-	
+	ser = serial.Serial('/dev/ttyACM0', 9600)
+
 	while not server.get_ready():
 		print("not ready")
 		time.sleep(0.2)
@@ -68,4 +72,7 @@ if __name__ == '__main__':
 		dist = lidar.range
 		if (dist < 400) and (dist != 0) and server.get_armed():
 			activate_alarm()
-		time.sleep(0.2)
+		txt = server.get_message()
+		if txt != "":
+			ser.write(txt)
+		time.sleep(0.3)
