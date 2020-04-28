@@ -176,7 +176,7 @@ def start_server():
         stop_alarm = False,
         message = ""
     )
-    app.run(host='0.0.0.0', port=8000, debug=False, threaded=True)
+    app.run(host='192.168.88.213', port=8000, debug=False, threaded=True)
     
 def start_camera(camera):
     camera.initialize()
