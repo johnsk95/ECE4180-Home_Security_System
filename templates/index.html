@@ -111,7 +111,7 @@
             var filename = dropdown.options[dropdown.selectedIndex].text;
             console.log(filename);
             var filepath = './static/videos/'+filename;
-            $("#video_player").html('<source src='+filepath+' type="video/mp4"></source>' );
+            $("#video_player").html('<source src='+filepath+' type="video/ogg"></source>' );
             var video = document.getElementById("video_player");
             video.load();
           });
