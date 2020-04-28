@@ -17,7 +17,7 @@ cv_lock = threading.Lock()
 cap = cv2.VideoCapture('dolce_faster.mp4')
 app = Flask("app")
 socketio = SocketIO(app)
-fourcc = cv2.VideoWriter.fourcc(*'H264')
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out = cv2.VideoWriter("static/videos/test.mp4", fourcc, 20, (640,480))
    
 @socketio.on('alarmoff')
