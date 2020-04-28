@@ -74,5 +74,5 @@ if __name__ == '__main__':
 			activate_alarm()
 		txt = server.get_message()
 		if txt != "":
-			ser.write(txt)
+			ser.write(txt.encode())
 		time.sleep(0.3)
