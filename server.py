@@ -16,6 +16,8 @@ cv_lock = threading.Lock()
 cap = cv2.VideoCapture('dolce_faster.mp4')
 app = Flask("app")
 socketio = SocketIO(app)
+fourcc = VideoWriter_fourcc(*'MP4V')
+out = cv2.VideoWriter("static/videos/test.mp4", fourcc, 10, (640,480))
    
 @socketio.on('alarmoff')
 def on_off(msg):
@@ -98,6 +100,10 @@ def gen(camera):
                     image = cv2.resize(image, (640,480))
                     _, frame = cv2.imencode('.JPEG', image)
                     frame = frame.tostring()
+                    arr = np.frombuffer(frame, np.uint8)
+                    image = cv2.imdecode(arr, cv2.IMREAD_COLOR)
+                    image = cv2.resize(image, (640,480))
+                    out.write(image)
                     frame_ready = True
         if(frame_ready):      
             yield (b'--frame\r\n'

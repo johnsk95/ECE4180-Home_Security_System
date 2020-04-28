@@ -59,7 +59,7 @@ class Camera(object):
 
     @classmethod
     def set_output(cls, filename):
-        fourcc = cv2.VideoWriter_fourcc('M','J','P','G')
+        fourcc = VideoWriter_fourcc(*'MP4V')
         cls.out = cv2.VideoWriter("static/videos/"+filename+".mp4", fourcc, 10, (640,480))
         print("create file "+filename)
 
