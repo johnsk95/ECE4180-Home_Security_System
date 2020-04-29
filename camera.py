@@ -51,7 +51,7 @@ class Camera(object):
     def stop_record(cls):
         cls.write_to_file = False
         if cls.out is not None:
-            cls.out.release()
+            #cls.out.release()
             cls.out = None
 
     @classmethod
