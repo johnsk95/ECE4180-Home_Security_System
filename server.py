@@ -42,7 +42,7 @@ def update_record():
     status = ""
     record = not app.config['record']
     app.config['record'] = record
-    camera = config['camera']
+    camera = app.config['camera']
     if record and (camera is not None):
         value = "Stop"
         status = "Camera Status: Recording"
