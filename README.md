@@ -28,7 +28,11 @@ The instructions below will help you set up the components needed for this syste
 ### Software
 - Python 3
 - flask
-- ...
+- socketio
+- OpenCV
+- AJAX
+- Javascript
+- C++
 
 ## Part 1. Assembling the Hardware
 ### Raspberry Pi
@@ -98,8 +102,8 @@ Clone this repository using command:
 Navigate to the repo using:
 ```cd ECE4180-Home_Security_System```
 
-Install required libraries using the command  
-```sudo pip3 install opencv numpy flask flask_session board busio flask_socketio digitalio adafruit-circuitpython-vl53l0x serial server```
+Install python required libraries using the command  
+```sudo pip3 install picamera opencv-python numpy flask flask_session flask-socketio RPI.GPIO digitalio adafruit-blinka adafruit-circuitpython-vl53l0x serial```
 
 Run this command to look up the Pi's IP
 ```ifconfig```
@@ -110,8 +114,8 @@ In this example, the if we will use is `192.168.88.213`
 
 The main code for this project is comprised of three parts.  
 `home_security.py` Main execution code. Links and activates the hardware. (LED, ToF, sound, camera) This is where the system monitors the distance with the ToF sensor and triggers the alarm.  
-`camera.py` Controls the camera. Deals with recording videos and streaming the camera feed to the server.  
-`server.py` Broadcasts the website and transmits messages to and fro between the pi and the website.  
+`camera.py` Controls the camera. Deals with recording videos and streaming the camera feed to the server.  Also records stream on command.
+`server.py` Broadcasts the website and transmits messages to and from between the pi and the website.  
 
 You need to enter your Pi's IP address in `server.py`.  
 Go to `start_server()`, and in line 181  
@@ -145,7 +149,7 @@ When someone approaches within a set distance, the alarm is triggered. The LED f
 
 ![warning](https://i.imgur.com/3toJMxC.png)  
 
-You can stop the alarm midway by pressing the Stop Alarm button. 
+A popup will appear on the webpage when the alarm is triggered. You can stop the alarm midway by pressing the Stop Alarm button on this popup. 
 When the alarm is triggered, the Pi records and saves a video of the camera feed. This is saved locally in `/static/videos` You can select and play the recorded videos using the drop down menu on the website.  
 
 You can also arm/disarm the alarm or manually record the camera feed through the Record and Arm buttons on the top. The recording and arm status is also displayed on the top of the webpage.  
