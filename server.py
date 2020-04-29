@@ -15,7 +15,6 @@ import numpy as np
 
 app = Flask("app")
 socketio = SocketIO(app)
-
    
 @socketio.on('alarmoff')
 def on_off(msg):
@@ -115,8 +114,11 @@ def get_video_dir_path():
 def get_video_filenames():
     video_path = get_video_dir_path()
     f = list()
-    for filename in os.listdir(video_path):
-        f.append(filename)
+    if len(os.listdir(video_path) ) == 0:
+        print("Directory is empty")
+    else:
+        for filename in os.listdir(video_path):
+            f.append(filename)
     return f
 
 
