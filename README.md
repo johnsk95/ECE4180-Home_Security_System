@@ -1,6 +1,6 @@
 # ECE4180 Project Spring 2020 - Home Security System
 Home Security System using Raspberry Pi  
-Team members: Rachel Tierney, John Seon Keun Yi  
+__Team members__: Rachel Tierney, John Seon Keun Yi  
 
 ## Introduction
 The Home Security System is designed and built for the final project of Embedded Systems Design (ECE4180) at Georgia Tech.  
