@@ -51,10 +51,11 @@ class Camera(object):
 
     @classmethod
     def stop_record(cls):
-        cls.write_to_file = False
-        if cls.out is not None:
-            #cls.out.release()
-            cls.out = None
+        with cv_lock:
+            cls.write_to_file = False
+            if cls.out is not None:
+                cls.out.release()
+                cls.out = None
 
     @classmethod
     def set_output_current_time(cls):
@@ -87,11 +88,12 @@ class Camera(object):
                 stream.seek(0)
 
                 cls.frame = stream.read()
-                if(cls.write_to_file and cls.out is not None):
-                    arr = np.frombuffer(cls.frame, np.uint8)
-                    image = cv2.imdecode(arr, cv2.IMREAD_COLOR)
-                    image = cv2.resize(image, (640,480))
-                    cls.out.write(image)
+                with cv_lock:
+                    if(cls.write_to_file and cls.out is not None):
+                        arr = np.frombuffer(cls.frame, np.uint8)
+                        image = cv2.imdecode(arr, cv2.IMREAD_COLOR)
+                        image = cv2.resize(image, (640,480))
+                        cls.out.write(image)
 
                 # reset stream for next frame
                 stream.seek(0)
