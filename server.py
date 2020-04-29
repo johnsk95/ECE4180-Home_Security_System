@@ -114,7 +114,7 @@ def get_video_dir_path():
 def get_video_filenames():
     video_path = get_video_dir_path()
     f = list()
-    if len(os.listdir(video_path) ) == 0:
+    if not os.listdir(video_path):
         print("Directory is empty")
     else:
         for filename in os.listdir(video_path):
