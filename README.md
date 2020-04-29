@@ -99,7 +99,7 @@ Navigate to the repo using:
 ```cd ECE4180-Home_Security_System```
 
 Install required libraries using the command  
-```pip3 install opencv numpy flask flask_session board busio flask_socketio digitalio adafruit-circuitpython-vl53l0x serial server```
+```sudo pip3 install opencv numpy flask flask_session board busio flask_socketio digitalio adafruit-circuitpython-vl53l0x serial server```
 
 Run this command to look up the Pi's IP
 ```ifconfig```
@@ -119,32 +119,37 @@ Change `'0.0.0.0'` to the IP address you found out above.  The home seciruty web
 
 ### Adjusting trigger distance
 This system triggers an alarm if an object comes within a set distance. This is done by periodically monitoring the distance using the ToF distance sensor.  
-This is controlled in line 73 in `home_security.py`. 
-![distance](https://i.imgur.com/dHfyXkK.png)
+This is controlled in line 73 in `home_security.py`.   
+![distance](https://i.imgur.com/dHfyXkK.png)  
 The default distance is set to 40cm (400mm) You can change the distance if you want. 
 
 ## Part 3. Running the System
 Run this command to activate the home security system
 ```python3 home_security.py```
-In the terminal you will see something like this:
-![running](https://i.imgur.com/ZFX34Q1.png)
+In the terminal you will see something like this:  
+![running](https://i.imgur.com/ZFX34Q1.png)  
 The camera and server needs a couple seconds to activate.  
 Now the security system is online and the server is active!  
 To access the website, go the the address in the command line using a device connected to the same network as the Pi.  
 For example, if your Pi's IP address is `192.168.88.213`, type in `http://192.168.88.213:8000` in a web browser.  
 
 This is the website to control and monitor the security system. 
+
 ![w1](https://i.imgur.com/Wmfke8C.png)
 ![w2](https://i.imgur.com/ARpwagC.png)
 
 The website shows a live feed from the Pi camera.  
 When someone approaches within a set distance, the alarm is triggered. The LED flashed and a siren is played through the speaker for 10 seconds. The host is notified through the website through a warning popup.
+
 ![warning](https://i.imgur.com/3toJMxC.png)
 You can stop the alarm midway by pressing the Stop Alarm button. 
 When the alarm is triggered, the Pi records and saves a video of the camera feed. This is saved locally in `/static/videos` You can select and play the recorded videos using the drop down menu on the website.  
 
 You can also arm/disarm the alarm or manually record the camera feed through the Record and Arm buttons on the top. The recording and arm status is also displayed on the top of the webpage.  
 
-Lastly, you can send a message from the website to be viewed on the lcd attached to the mbed. 
+Lastly, you can send a message from the website to be viewed on the lcd attached to the mbed.  
+
 ![msg](https://i.imgur.com/thZ0Bjr.png)
 ![lcd](https://i.imgur.com/TFQStrw.jpg|height=200)
+
+A detailed overview of the functions of the Home Security System is described on the demo video. Follow the link on the top of this page to see the demo.  
