@@ -116,7 +116,6 @@ def get_video_filenames():
     video_path = get_video_dir_path()
     f = list()
     for filename in os.listdir(video_path):
-        print(filename)
         f.append(filename)
     return f
 
@@ -146,7 +145,7 @@ def refresh_page():
 def test_camera():
     try:
         with picamera.PiCamera() as test_cam:
-            print("Camera attached")
+            print("camera attached")
             test_cam.close()
         return True
     except:
