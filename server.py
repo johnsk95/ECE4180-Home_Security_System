@@ -238,3 +238,5 @@ def get_stop_alarm():
 
 def shutdown_server():
     sys.exit(0)
+    cap.release()
+    out.release()
