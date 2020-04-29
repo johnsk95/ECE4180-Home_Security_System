@@ -50,7 +50,9 @@ class Camera(object):
     @classmethod
     def stop_record(cls):
         cls.write_to_file = False
-        cls.out = None
+        if cls.out is not None:
+            cls.out.release()
+            cls.out = None
 
     @classmethod
     def set_output_current_time(cls):
