@@ -8,8 +8,8 @@ This system uses a Raspberry Pi 3B and a ToF distance sensor to detect an approa
 We also use an mbed board connected to an LCD to display a message sent from the website.   
 One stand-out feature of this project is that every function of the system such as camera stream and alarm status is observable and controllable via a website connected to the Pi. 
 
-Demo:  
-Presentation: 
+[Demo video link](https://www.youtube.com/watch?v=90K8kdUWc1k)
+[Presentation link]()
 
 ## Getting Started
 The instructions below will help you set up the components needed for this system. 
