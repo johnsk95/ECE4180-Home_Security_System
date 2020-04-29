@@ -119,6 +119,9 @@ a { text-decoration: none; }
   align-items: right;
 }
 
+img{
+  margin:20px;
+}
 
 select, input, textarea {
   padding: 12px;
