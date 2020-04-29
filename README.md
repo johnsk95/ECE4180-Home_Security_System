@@ -104,7 +104,8 @@ Install required libraries using the command
 Run this command to look up the Pi's IP
 ```ifconfig```
 Since we are connecting through wifi, look in the part labeled 'wlan'  
-![ipaddr](https://i.imgur.com/ELT4o66.png)
+![ipaddr](https://i.imgur.com/ELT4o66.png)  
+
 In this example, the if we will use is `192.168.88.213`  
 
 The main code for this project is comprised of three parts.  
@@ -114,7 +115,8 @@ The main code for this project is comprised of three parts.
 
 You need to enter your Pi's IP address in `server.py`.  
 Go to `start_server()`, and in line 181  
-![server_ip](https://i.imgur.com/BuOFfkr.png)
+![server_ip](https://i.imgur.com/BuOFfkr.png)  
+
 Change `'0.0.0.0'` to the IP address you found out above.  The home seciruty website will be broadcasted to this address.  
 
 ### Adjusting trigger distance
@@ -141,7 +143,8 @@ This is the website to control and monitor the security system.
 The website shows a live feed from the Pi camera.  
 When someone approaches within a set distance, the alarm is triggered. The LED flashed and a siren is played through the speaker for 10 seconds. The host is notified through the website through a warning popup.
 
-![warning](https://i.imgur.com/3toJMxC.png)
+![warning](https://i.imgur.com/3toJMxC.png)  
+
 You can stop the alarm midway by pressing the Stop Alarm button. 
 When the alarm is triggered, the Pi records and saves a video of the camera feed. This is saved locally in `/static/videos` You can select and play the recorded videos using the drop down menu on the website.  
 
