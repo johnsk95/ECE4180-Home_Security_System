@@ -13,6 +13,8 @@ import os
 from flask_socketio import SocketIO, emit
 import numpy as np
 
+cv_lock = threading.Lock()
+cap = cv2.VideoCapture('dolce_faster.mp4')
 app = Flask("app")
 socketio = SocketIO(app)
    
@@ -90,7 +92,14 @@ def gen(camera):
         if(camera is not None):
             frame = camera.get_frame()
             frame_ready = True
-
+        else:
+            with cv_lock:
+                if(cap.isOpened()):
+                    ret, image = cap.read()
+                    #image = cv2.resize(image, (640,480))
+                    _, frame = cv2.imencode('.JPEG', image)
+                    frame = frame.tostring()
+                    frame_ready = True
         if(frame_ready):      
             yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
