@@ -15,7 +15,8 @@ import numpy as np
 import copy
 from datetime import datetime
 
-
+cv_lock = threading.Lock()
+camera_lock = threading.Lock()
 class Camera(object):
     thread = None  # background thread that reads frames from camera
     write_to_file = False
@@ -24,14 +25,15 @@ class Camera(object):
     out = None
 
     def initialize(self):
-        if Camera.thread is None:
-            # start background frame thread
-            Camera.thread = threading.Thread(target=self._thread)
-            Camera.thread.start()
+        with camera_lock:
+            if Camera.thread is None:
+                # start background frame thread
+                Camera.thread = threading.Thread(target=self._thread)
+                Camera.thread.start()
 
-            # wait until frames start to be available
-            while self.frame is None:
-                time.sleep(0)
+                # wait until frames start to be available
+                while self.frame is None:
+                    time.sleep(0)
 
 
     def get_frame(self):
@@ -61,9 +63,10 @@ class Camera(object):
 
     @classmethod
     def set_output(cls, filename):
-        fourcc = cv2.VideoWriter_fourcc('T','H','E','O')
-        cls.out = cv2.VideoWriter("static/videos/"+filename+".ogv", fourcc, 20, (640,480))
-        print("create file "+filename)
+        with cv_lock:
+            fourcc = cv2.VideoWriter_fourcc('T','H','E','O')
+            cls.out = cv2.VideoWriter("static/videos/"+filename+".ogv", fourcc, 20, (640,480))
+            print("create file "+filename)
 
     @classmethod
     def _thread(cls):
